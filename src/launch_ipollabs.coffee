@@ -12,7 +12,7 @@ include_session = (td) ->
     td.applications.push new TreeAppApplication_IpolLSD
     td.applications.push new TreeAppApplication_IpolSCA
     #td.applications.push new TreeAppApplication_IpolStackMCM
-    td.applications.push new TreeAppApplication_IpolTVDeconvolution
+    td.applications.push new TreeAppApplication_IpolTVD
     
     td.modules.push new TreeAppModule_UndoManager
     td.modules.push new TreeAppModule_PanelManager
