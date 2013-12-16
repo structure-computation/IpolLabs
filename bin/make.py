@@ -1,7 +1,7 @@
 execfile( "ext/Soja/bin/concat_js.py" )
 
 # main lib
-concat_js( "src", "html/gen/EcosystemScience.js", "html/gen/EcosystemScience.css" )
+concat_js( "src", "html/gen/IpolLabs.js", "html/gen/IpolLabs.css" )
 
 # ext tools
 for plugins_dir in [ "plugins" ]:
