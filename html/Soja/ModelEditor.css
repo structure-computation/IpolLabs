@@ -1,0 +1,197 @@
+/*
+ Copyright 2012 Structure Computation  www.structure-computation.com
+ Copyright 2012 Hugo Leclerc
+
+ This file is part of Soda.
+
+ Soda is free software: you can redistribute it and/or modify
+ it under the terms of the GNU Lesser General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ Soda is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU Lesser General Public License for more details.
+ You should have received a copy of the GNU General Public License
+ along with Soda. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+
+fieldset {
+    background: transparent;
+    border: 1px solid #262626;
+    margin-top: 4px ;
+    margin-bottom: 4px ;
+    /*background-image: -webkit-linear-gradient( bottom, #ddd, #fff );
+    background-image: -moz-linear-gradient( bottom, #ddd, #fff );
+    background-image: -o-linear-gradient( bottom, #ddd, #fff );
+    background-image: linear-gradient( bottom, #ddd, #fff );
+
+    border               : 1px solid #bbb;*/
+    -moz-border-radius   : 4px;
+    -webkit-border-radius: 4px;
+    -o-border-radius     : 4px;
+    border-radius        : 4px;
+}
+
+fieldset.ModelEditor_closed {
+    background: transparent;
+    border: 1px solid #262626;
+    //color:    #e5e5e5;
+}
+
+legend {
+    //background-color     : #262626;
+    //border: 1px solid #262626;
+    color:    #262626;
+    font-size  : 13px;
+    font-weight: bold;
+    /*-moz-border-radius   : 4px;
+    -webkit-border-radius: 4px;
+    -o-border-radius     : 4px;
+    border-radius        : 4px;*/
+    padding-left         : 3px;
+    padding-right        : 3px;
+}
+
+input {
+   /* margin-right: 1px;
+    padding-left: 1px;*/
+    -moz-border-radius   : 5px;
+    -webkit-border-radius: 5px;
+    -o-border-radius     : 5px;
+    border: 1px solid #e5e5e5;
+    background-color     : #c7c7c7;
+    //color: #e5e5e5;
+}
+
+textarea {
+   /* margin-right: 1px;
+    padding-left: 1px;*/
+    -moz-border-radius   : 5px;
+    -webkit-border-radius: 5px;
+    -o-border-radius     : 5px;
+    border: 1px solid #e5e5e5;
+    background-color     : #c7c7c7;
+    //color: #e5e5e5;
+}
+
+/* --------------------------- slider --------------------------- */
+
+.ModelEditorSlider {
+    background-image     : url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAICAIAAAC3eAIWAAAAAXNSR0IArs4c6QAAAAZiS0dEAAAAAAAA+UO7fwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sJHg45GvCDXVsAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAAIklEQVQI12NIT09nfv3qFZOevh7D1q1bmRgYGGCY4f///wCkowmnWxwK1gAAAABJRU5ErkJggg==');
+    background-position  : center;
+    background-repeat    : repeat-x;
+
+    -moz-border-radius   : 8px;
+    -webkit-border-radius: 8px;
+    -o-border-radius     : 8px;
+    border-radius        : 8px;
+    vertical-align       : middle;
+    height               : 8px;
+}
+
+.ModelEditorSliderItem {
+    background-image     : url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAARCAYAAAAL4VbbAAAAAXNSR0IArs4c6QAAAAZiS0dEAGoAagBqwuYSIwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sJHg8AB5zD1g8AAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAABoElEQVQoz42QP29SURjGf+cesM0lGu1mLo22tQOJcaiQsOHEYIwJo9+FWpqoO90am8BXYHDwLA4VbAfCruAXYHgTCtf7p/ceh5YbTG3SJ3mG8zzP++8oAGPMF9/3X7uuyy04rNfrLWWMaQEHe3svebSxAUCSJGitAQiCkEH/FGvtW10qlb41Gg20doii8IphRBxHRFFImiZ4nkev13uXA0hTy8X8D1F8CUA+fw+AOI4AePigAIADcLEIieJLXLdALpfHWou1FgDXLTD3r4pyqzuGYXDjslXNAVDKIUkS1tbWUcrJCGRa1tna9E6dswP/B6Wcf7zcdDrF2pS7wAnD7NNv5aB/ymw2Qw+Hw4Pd3WcqCAK84uaN4I/Bdybjn3Q6HXStVntizNfnOzvb2vcXeMXNbOz5WZ/J+BcnJ5/pdruHejQajarV6v1ms/lie2tLLxZzvGKR87M+vyfjLFipVFqICCLiGWOOAdtuH9kPHz/ZdvvIAtYY0xKRxyICIqKvCzDGHJfLZbu//341+GbpIyJq+RCRp8sJxphX19r60v8LCZYY7qIAqIAAAAAASUVORK5CYII=');
+    width                : 11px;
+    height               : 17px;
+    top                  : -5px;
+}
+
+/* --------------------------- check img --------------------------- */
+.ModelEditorItem_CheckImg_0 {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAIhSURBVDjLlZPrThNRFIWJicmJz6BWiYbIkYDEG0JbBiitDQgm0PuFXqSAtKXtpE2hNuoPTXwSnwtExd6w0pl2OtPlrphKLSXhx07OZM769qy19wwAGLhM1ddC184+d18QMzoq3lfsD3LZ7Y3XbE5DL6Atzuyilc5Ciyd7IHVfgNcDYTQ2tvDr5crn6uLSvX+Av2Lk36FFpSVENDe3OxDZu8apO5rROJDLo30+Nlvj5RnTlVNAKs1aCVFr7b4BPn6Cls21AWgEQlz2+Dl1h7IdA+i97A/geP65WhbmrnZZ0GIJpr6OqZqYAd5/gJpKox4Mg7pD2YoC2b0/54rJQuJZdm6Izcgma4TW1WZ0h+y8BfbyJMwBmSxkjw+VObNanp5h/adwGhaTXF4NWbLj9gEONyCmUZmd10pGgf1/vwcgOT3tUQE0DdicwIod2EmSbwsKE1P8QoDkcHPJ5YESjgBJkYQpIEZ2KEB51Y6y3ojvY+P8XEDN7uKS0w0ltA7QGCWHCxSWWpwyaCeLy0BkA7UXyyg8fIzDoWHeBaDN4tQdSvAVdU1Aok+nsNTipIEVnkywo/FHatVkBoIhnFisOBoZxcGtQd4B0GYJNZsDSiAEadUBCkstPtN3Avs2Msa+Dt9XfxoFSNYF/Bh9gP0bOqHLAm2WUF1YQskwrVFYPWkf3h1iXwbvqGfFPSGW9Eah8HSS9fuZDnS32f71m8KFY7xs/QZyu6TH2+2+FAAAAABJRU5ErkJggg==') left top no-repeat;
+    height    : 14;
+}
+
+.ModelEditorItem_CheckImg_1 {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAGrSURBVDjLvZPZLkNhFIV75zjvYm7VGFNCqoZUJ+roKUUpjRuqp61Wq0NKDMelGGqOxBSUIBKXWtWGZxAvobr8lWjChRgSF//dv9be+9trCwAI/vIE/26gXmviW5bqnb8yUK028qZjPfoPWEj4Ku5HBspgAz941IXZeze8N1bottSo8BTZviVWrEh546EO03EXpuJOdG63otJbjBKHkEp/Ml6yNYYzpuezWL4s5VMtT8acCMQcb5XL3eJE8VgBlR7BeMGW9Z4yT9y1CeyucuhdTGDxfftaBO7G4L+zg91UocxVmCiy51NpiP3n2treUPujL8xhOjYOzZYsQWANyRYlU4Y9Br6oHd5bDh0bCpSOixJiWx71YY09J5pM/WEbzFcDmHvwwBu2wnikg+lEj4mwBe5bC5h1OUqcwpdC60dxegRmR06TyjCF9G9z+qM2uCJmuMJmaNZaUrCSIi6X+jJIBBYtW5Cge7cd7sgoHDfDaAvKQGAlRZYc6ltJlMxX03UzlaRlBdQrzSCwksLRbOpHUSb7pcsnxCCwngvM2Rm/ugUCi84fycr4l2t8Bb6iqTxSCgNIAAAAAElFTkSuQmCC') left top no-repeat;
+    height    : 14;
+}
+
+
+
+/* --------------------------- choiceRoll --------------------------- */
+.ModelEditorChoiceRoll {
+    background: #ddd;
+    background-image: -webkit-linear-gradient( bottom, #DEDEDE, #F3F3F3 );
+    background-image: -moz-linear-gradient( bottom, #DEDEDE, #F3F3F3 );
+    background-image: -o-linear-gradient( bottom, #DEDEDE, #F3F3F3 );
+    background-image: linear-gradient( bottom, #DEDEDE, #F3F3F3 );
+
+    margin               : -1;
+    margin-top           : 1;
+    margin-bottom        : 1;
+    -moz-border-radius   : 4px;
+    -webkit-border-radius: 4px;
+    -o-border-radius     : 4px;
+    border-radius        : 4px;
+    border               : 1px solid #898989;
+
+    overflow             : hidden;
+
+}
+/*.ModelEditorChoiceRoll:hover {
+    overflow             : visible;
+}*/
+
+.ModelEditorChoiceRollWindow {
+    text-align        : center;
+    cursor            : pointer;
+    -moz-transition   : top 0.5s ease;
+    -webkit-transition: top 0.5s ease;
+    -o-transition     : top 0.5s ease;
+    transition        : top 0.5s ease;
+    color             : black;
+    position          : relative;
+}
+
+/* ---------------- Popup ---------------- */
+.Popup {
+    border    : thin solid black;
+    //background: white;
+    //background: #e5e5e5;
+    background: #848484;
+    
+    resize    : both;
+    overflow  : auto; /* overflow is necessary for resize to work */
+    padding-bottom: 8px; /* Necessary for resize icon to appear on Chrome */
+}
+.PopupWindow {
+    //background: #e5e5e5;
+    //background: #848484;
+    padding   : 3;
+    height    : 90%;
+}
+.PopupWindow .directory_container {
+    height    : 100%;
+}
+.PopupTitle {
+    background: #262626;
+    padding: 5 10 3 10;
+    height    : 22px;
+    font-size : 12px;
+    border-bottom:thin solid black;
+    cursor:pointer;
+    color: white;
+}
+
+.PopupClose {
+    float        : right;
+    margin-right : 4px;
+    margin-top   : 4px;
+    cursor       : pointer;
+}
+
+.PopupClose:hover {
+    text-decoration: underline;
+}
+
+.ModelEditorDragAndDrop {
+    -moz-border-radius   : 4px;
+    -webkit-border-radius: 4px;
+    -o-border-radius     : 4px;
+    border-radius        : 4px;
+/*     border               : 1px dotted #898989; */
+}

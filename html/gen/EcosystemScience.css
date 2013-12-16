@@ -1,0 +1,132 @@
+
+/*
+ Copyright 2012 Structure Computation  www.structure-computation.com
+ Copyright 2012 Hugo Leclerc
+
+ This file is part of Soda.
+
+ Soda is free software: you can redistribute it and/or modify
+ it under the terms of the GNU Lesser General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ Soda is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU Lesser General Public License for more details.
+ You should have received a copy of the GNU General Public License
+ along with Soda. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+
+h1 {
+    padding     :0px;
+    margin      :0px;
+    height      :3em;
+    line-height :2em;
+    text-indent :5%;
+    color       :#262626;
+}
+body {
+    margin: 0 auto;
+    background: #262626;
+    color : white;
+    font-family: sans-serif;
+    font-size  : 11px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+
+.apps_container{
+    //height:     300px;
+    width:      100%;
+}
+
+.app_icon{
+    height:     70px;
+    width:      140px;
+    float:      left;
+    margin:     5px 0px 5px 0px ;
+    //border:     thin solid grey;
+    -moz-border-radius   : 5px;
+    -webkit-border-radius: 5px;
+    -o-border-radius     : 5px;
+    border-radius        : 5px;
+}
+.app_icon:hover {
+    background: #c6c6c6; /*lightBlue;*/
+    cursor:pointer;
+}
+
+.app_group{
+    height:     200px;
+    width:      140px;
+    float:      left;
+    margin:     5px 5px 5px 5px ;
+    //background: #c6c6c6;
+    border:     thin solid #262626;
+    -moz-border-radius   : 5px;
+    -webkit-border-radius: 5px;
+    -o-border-radius     : 5px;
+    border-radius        : 5px;
+}
+
+.app_group_text{
+    width:      130px;
+    height:     70px;
+    float:      left;
+    margin:     5px 0px 0px 5px ;
+    border:     none;
+    text-align: center;
+    color :     #262626;
+}
+
+.app_group_title{
+    width:      100%;
+    float:      left;
+    margin:     2px 0px 0px 0px ;
+    border:     none;
+    //color :     #262626;
+    font-weight: bold;
+}
+
+.app_group_name{
+    width:      100%;
+    float:      left;
+    margin:     2px 0px 0px 0px ;
+    border:     none;
+    //color :     #262626;
+}
+
+.app_group_link{
+    width:      140px;
+    height:     32px;
+    float:      left;
+    margin:     0px 0px 0px 5px ;
+    border:     none;
+    text-align: center;
+    //color :     #262626;
+}
+
+
+.app_group_publication_link{
+    width:      32px;
+    height:     32px;
+    margin:     0px 3px 0px 3px ;
+    border:     none;
+    float:      left;
+    background-image     : url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAAAAXNSR0IArs4c6QAAAAJiS0dEAP+Hj8y/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QwQDAwBJTWZMQAAA89JREFUSMellX9MlWUUxz/Pe98LXCRQIn/QZEQEBMTFH1wZoiIlrF/0R7RWKv2Y2dzQmgXD0jXXYgWh6cRZaxSk2KJMy/4oSzTSIJ2EV5QSFEyFtUDlDiW8957+uPcC93oBt87Z3r3PefZ8dp7ve8554X+aAojjj+CP4t+w97uWgEKnVs/73SSDEzNmKMivWyAmUaINu1GWSPU7sGJigLCwThdd7pbYUT5TpkuylGyc6LQO377Um6/xwIHyKtuRG84gTTCovMsXH+uKnl99KpAANBSgnZlxf7tfRtSyQJkn38/1jq77Me7GHJkr88QiFrFImqTKm7/9m1BDhC/AuExJroys6+nJLhCcSJiEyxS3h0uw4HhFWuJvuYK3VbCYtbm7CFXx1c66YM0TN9ARYa/aIlebzqeHtN01Xga/GIsFSWuCGC90UUyaIDiL5XQSRLuj2q2aXJAu4BkF57zidxAIKFUm7/7amtg5NsDueopv3IEAgqZqQipaLyVDrT8NUMaREnW9iOt5jx4CgnKCqhLTCclSR/0BEP/VRlL7o6XpLzvs0KXtDf/UeO1JOar8ifiZ/rQg5U2+TfP8qFXSAWSNiNmvBr6tBrAUwWz6s7oxaZU+TUHreRjEZh8H4H2RnWFfr959PaUg/ZSt8dBkwOARR7uddoctaRVbu/9Oytre/eWcwkWuuOBQfkX0TiOSy2yN/9wWbf4uK+xwcs6Q9fiQa0dhlIkz4JJan735UGtjQ8sjU44ldR6fzTdGD92uUOMCliqZvP/VT35S7DDnWR8s2dB4JnBz5aJ9w/dzZeAcE7DzztzYlZvMZOy5+cSzH9QPWkO+qlxQWDS8r4HoEMx1BjmbYGm74qPe8qC+YyF97xeuqy1CJ5yPt2WuiaXcS18N1puisFJU4jl+n3g+/0MFHQykJ+7eG26uvLfaqh5ercR3KGlQXBfZ0icHnzM0BNUH1Yc05sR4asB29irbdq21xO2Zlnr4Nf9FrkPEtd7UzBPts/ozHQAETPJk0HMw76/8NGdTBqvKVO9pd9InSRlVajr0SjwN2U/lmpKHBBHoNgBOBaVXGjMuLoycnrkvo+M9EgHoJxRgCAIwGjytAYzM78XqhWacU61dlmExfOzcymzRJPTtUaVaRrF7cwWlpk3Ld3w4wBKaq3sGROHmCChNwOnMKfxBZqoXH9+4/4I//mwkccPJqaKEMVyTKPniZzG9Prphfa3mrQLTrPnNbe55NLpJHVFD/2wf6Ey5aXWOCYhV7SJRPbZJCaC8pBACDIFHoIhydPf8HMPKbuv3/h9pYZFK58wzRwAAAABJRU5ErkJggg==');
+    background-position  : center;
+}
+
+
+.app_group_tutorial_link{
+    width:      32px;
+    height:     32px;
+    margin:     0px 3px 0px 3px ;
+    border:     none;
+    float:      left;
+    background-image     : url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB90MEA0GGyN64vYAAAO+SURBVEjHzVZNi1xFFD3nVr2eTs/0jMwHmQwk6JgoiBCC4kIRCWapIP4B3QjmLwiCk58QFxJcBZKdG/EXKCKKLtSNGxdjJupoNMwMM9Pd71Xd4+K96enuNLhq9PLgfVTVrXvPPfe84q/PPo1ZmmHGFqEZb+D0GW8wY5QixNluIP1rEYimUKMP9Yvq+3BgygY556kuAbiLAEHRQaMCKdAhk8soSSBFGShAbMAYDTpiFCGBpKdkZ9fD2iqLwkNgMEPwVmGxYAiywJzk7mXJQSVmc+ScbdBLO7/gqIcQTmMEYh5Njggp47nnF955t9jcZLfLTodzkVZQohFoQAEgQe7MSWXyw0Pff9j77pujmx9ib89ttMg+VuQSWNu60d68qFRBIhz9EiqFhg3CeM6EDFxaiEuLC5sX1SsPPnjf5rsjnSwOL1Vp7vLl4vwFDPr0TJe8BlpiDayocXPRwSzkxHIwf+1abndQhyNCNKeccsgpz4lPPmU6oQlBkiRAAmaAmo9AM0QSBAiQkli0eW5DKTUOKZMgQYAkz27nlht8JwLtD+7fuX20+4fnLACYzKRJELKVpeZZkGDucIe73CkB7XlNW6yqSrfvbr/5xr07d/e377lAsynTzNnqZFdu3CKecBcSIA+hA5+iTgIx1+ne3zm8sfXXM58svP7a2tWrK5cuuWtyWiuixrRh0WlvUVBGdsim9LcAOUO3M9/+8fvDUJQvvVhji7G5k0tjHr7L5ZAyhKaOE+7l1eGBbT7+2NZ7Gy+8XGxsuOuEAUNzJKBmX6OmQ0Dqyh73JfdHEvCcc2D3+vXuW2+3VlYRTe6T0QPuOVWV3Idu44kU1dy0/sEBkBumjFq7ffbWrWJ93aokSVWarotVKA/3ISJP1SIL6bedDBiICYzIueVVDCqHMAXCRuCyBmn3z2h2qkVOndY5tgY//AREMOERXXCpbr6xgVNtAojy4Z7/vusL80P9NjlOLsmon7f3PvuUiwtstVjMMRaKESEoGArSCDOYmRmCMQQVETEyFuy0ZeHBRx9bKKShT/Db85vjbBEWu8Wrr7SvXAnLq3G+E9otxZZZsE6bMYqB2d2z+sepSiGV+WiQjg7y3w+OP/8qffFl/Qs5hfbrC09MQumSkWfOMARYIA0USJdI1moEiYAkipBD2auk417N2tEKjdC0XkDSQAi9YwGQSQS9FqcGVjOS2Z2gZKJLXi+sNcrdh3tEjf0P2DTneIfVxBnW1XNTU9WdpbqBhwtZ+5mSwX91qvjfn001Y4g425PdPzbdovl0Zgl3AAAAAElFTkSuQmCC');
+    background-position  : center;
+}
