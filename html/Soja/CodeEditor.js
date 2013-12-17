@@ -1,4 +1,42 @@
-var ModelEditorItem_TextAreaLanguage;
+var StrLanguage;
+var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+StrLanguage = (function() {
+  __extends(StrLanguage, Model);
+  function StrLanguage(value, language, callback) {
+    if (value == null) {
+      value = "";
+    }
+    if (language == null) {
+      language = "text";
+    }
+    if (callback == null) {
+      callback = void 0;
+    }
+    StrLanguage.__super__.constructor.call(this);
+    this.add_attr({
+      value: new Str(value),
+      language: language,
+      callback: callback
+    });
+  }
+  StrLanguage.prototype.get = function() {
+    return this.value.get();
+  };
+  StrLanguage.prototype.set = function(val) {
+    return this.value.set(val);
+  };
+  StrLanguage.prototype.get_language = function() {
+    return this.language.get();
+  };
+  return StrLanguage;
+})();var ModelEditorItem_TextAreaLanguage;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -60,8 +98,8 @@ ModelEditorItem_TextAreaLanguage = (function() {
     });
     if ((_ref = this.ev) != null) {
       _ref.onmousedown = __bind(function() {
-        var _ref2;
-        return (_ref2 = this.get_focus()) != null ? _ref2.set(this.view_id) : void 0;
+        var _ref;
+        return (_ref = this.get_focus()) != null ? _ref.set(this.view_id) : void 0;
       }, this);
     }
     this.code_mirror = CodeMirror.fromTextArea(this.textarea, {
@@ -85,8 +123,8 @@ ModelEditorItem_TextAreaLanguage = (function() {
       }, this)
     });
     this.code_mirror.getWrapperElement().onmousedown = __bind(function() {
-      var _ref2;
-      return (_ref2 = this.get_focus()) != null ? _ref2.set(this.view_id) : void 0;
+      var _ref;
+      return (_ref = this.get_focus()) != null ? _ref.set(this.view_id) : void 0;
     }, this);
     this.hlLine2 = this.code_mirror.setLineClass(0, "activeline");
   }
@@ -112,42 +150,4 @@ ModelEditorItem.default_types.push(function(model) {
   if (model instanceof StrLanguage) {
     return ModelEditorItem_TextAreaLanguage;
   }
-});var StrLanguage;
-var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
-StrLanguage = (function() {
-  __extends(StrLanguage, Model);
-  function StrLanguage(value, language, callback) {
-    if (value == null) {
-      value = "";
-    }
-    if (language == null) {
-      language = "text";
-    }
-    if (callback == null) {
-      callback = void 0;
-    }
-    StrLanguage.__super__.constructor.call(this);
-    this.add_attr({
-      value: new Str(value),
-      language: language,
-      callback: callback
-    });
-  }
-  StrLanguage.prototype.get = function() {
-    return this.value.get();
-  };
-  StrLanguage.prototype.set = function(val) {
-    return this.value.set(val);
-  };
-  StrLanguage.prototype.get_language = function() {
-    return this.language.get();
-  };
-  return StrLanguage;
-})();
+});

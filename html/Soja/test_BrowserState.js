@@ -1,5 +1,4 @@
 var test_BrowserState;
-
 test_BrowserState = function() {
   var b;
   b = new BrowserState;

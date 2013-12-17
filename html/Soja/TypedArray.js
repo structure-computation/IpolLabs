@@ -73,7 +73,7 @@ TypedArray = (function() {
     for (i = 0, _len = _ref.length; i < _len; i++) {
       v = _ref[i];
       res += v;
-      for (j = _ref2 = l.length - 1; _ref2 <= 0 ? j <= 0 : j >= 0; _ref2 <= 0 ? j++ : j--) {
+      for (j = _ref2 = l.length - 1; (_ref2 <= 0 ? j <= 0 : j >= 0); (_ref2 <= 0 ? j += 1 : j -= 1)) {
         if (i % l[j] === l[j] - 1) {
           res += [" ", "\n", "\n\n"][j];
           break;
@@ -139,7 +139,7 @@ TypedArray = (function() {
     if (index.length) {
       o = 0;
       m = 1;
-      for (i = 0, _ref = index.length; 0 <= _ref ? i < _ref : i > _ref; 0 <= _ref ? i++ : i--) {
+      for (i = 0, _ref = index.length; (0 <= _ref ? i < _ref : i > _ref); (0 <= _ref ? i += 1 : i -= 1)) {
         o += m * index[i];
         m *= this._size[i];
       }
@@ -174,7 +174,7 @@ TypedArray = (function() {
     this._size = (function() {
       var _results;
       _results = [];
-      for (v = 0; 0 <= s ? v < s : v > s; 0 <= s ? v++ : v--) {
+      for (v = 0; (0 <= s ? v < s : v > s); (0 <= s ? v += 1 : v -= 1)) {
         _results.push(parseInt(l[v + 1]));
       }
       return _results;
@@ -183,136 +183,13 @@ TypedArray = (function() {
     n = this.nb_items();
     this._data = new B(n);
     _results = [];
-    for (v = 0; 0 <= n ? v < n : v > n; 0 <= n ? v++ : v--) {
+    for (v = 0; (0 <= n ? v < n : v > n); (0 <= n ? v += 1 : v -= 1)) {
       _results.push(this._data[v] = parseFloat(l[s + 1 + v]));
     }
     return _results;
   };
   return TypedArray;
-})();var ModelEditorItem_TypedArray;
-var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-}, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-ModelEditorItem_TypedArray = (function() {
-  __extends(ModelEditorItem_TypedArray, ModelEditorItem);
-  function ModelEditorItem_TypedArray(params) {
-    ModelEditorItem_TypedArray.__super__.constructor.call(this, params);
-    this._ad = [];
-    this._size = [];
-    this._inputs = [];
-  }
-  ModelEditorItem_TypedArray.prototype.onchange = function() {
-    var i, input, w, _i, _j, _len, _len2, _len3, _ref, _ref2, _ref3, _results;
-    if (!this._same_parms()) {
-      this._size = this.model.size();
-      _ref = this._inputs;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        i = _ref[_i];
-        this.ed.removeChild(i);
-      }
-      _ref2 = this._ad;
-      for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-        i = _ref2[_j];
-        this.ed.removeChild(i);
-      }
-      this._ad = [];
-      w = this.ew / this.model.size(0);
-      if (this.model.dim() > 1) {
-        w = 100 / this.model.size(0);
-        this._ad.push(new_dom_element({
-          parentNode: this.ed,
-          nodeName: "span",
-          style: {
-            display: "inline-block",
-            width: this.ew + "%"
-          }
-        }));
-      }
-      this._inputs = (function() {
-        var _ref3, _results;
-        _results = [];
-        for (i = 0, _ref3 = this.model.nb_items(); 0 <= _ref3 ? i < _ref3 : i > _ref3; 0 <= _ref3 ? i++ : i--) {
-          _results.push(__bind(function(i) {
-            var input;
-            return input = new_dom_element({
-              parentNode: this.ed,
-              type: "text",
-              nodeName: "input",
-              style: {
-                width: w + "%"
-              },
-              onchange: __bind(function() {
-                this.snapshot();
-                return this.model.set_val(i, input.value);
-              }, this),
-              onfocus: __bind(function() {
-                var _ref4;
-                return (_ref4 = this.get_focus()) != null ? _ref4.set(this.view_id) : void 0;
-              }, this)
-            });
-          }, this)(i));
-        }
-        return _results;
-      }).call(this);
-    }
-    _ref3 = this._inputs;
-    _results = [];
-    for (i = 0, _len3 = _ref3.length; i < _len3; i++) {
-      input = _ref3[i];
-      _results.push(input.value = this.model.get(i));
-    }
-    return _results;
-  };
-  ModelEditorItem_TypedArray.prototype._same_parms = function() {
-    var i, v, _len, _ref;
-    if (this._size.length !== this.model.dim()) {
-      return false;
-    }
-    _ref = this._size;
-    for (i = 0, _len = _ref.length; i < _len; i++) {
-      v = _ref[i];
-      if (v !== this.model.size(i)) {
-        return false;
-      }
-    }
-    return true;
-  };
-  return ModelEditorItem_TypedArray;
-})();
-ModelEditorItem.default_types.unshift(function(model) {
-  if (model instanceof TypedArray) {
-    return ModelEditorItem_TypedArray;
-  }
-});var TypedArray_Float32,
-  __hasProp = Object.prototype.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
-
-TypedArray_Float32 = (function(_super) {
-
-  __extends(TypedArray_Float32, _super);
-
-  function TypedArray_Float32(size, data) {
-    if (size == null) size = [];
-    TypedArray_Float32.__super__.constructor.call(this, size, data);
-  }
-
-  TypedArray_Float32.prototype.base_type = function() {
-    return Float32Array;
-  };
-
-  TypedArray_Float32.prototype.deep_copy = function() {
-    return new TypedArray_Float32(this._size, this._data);
-  };
-
-  return TypedArray_Float32;
-
-})(TypedArray);
-var TypedArray_Float64;
+})();var TypedArray_Float64;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -360,4 +237,127 @@ TypedArray_Int32 = (function() {
     return new TypedArray_Int32(this._size, this._data);
   };
   return TypedArray_Int32;
+})();var TypedArray_Float32;
+var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+TypedArray_Float32 = (function() {
+  __extends(TypedArray_Float32, TypedArray);
+  function TypedArray_Float32(size, data) {
+    if (size == null) {
+      size = [];
+    }
+    TypedArray_Float32.__super__.constructor.call(this, size, data);
+  }
+  TypedArray_Float32.prototype.base_type = function() {
+    return Float32Array;
+  };
+  TypedArray_Float32.prototype.deep_copy = function() {
+    return new TypedArray_Float32(this._size, this._data);
+  };
+  return TypedArray_Float32;
+})();var ModelEditorItem_TypedArray;
+var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+}, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+ModelEditorItem_TypedArray = (function() {
+  __extends(ModelEditorItem_TypedArray, ModelEditorItem);
+  function ModelEditorItem_TypedArray(params) {
+    ModelEditorItem_TypedArray.__super__.constructor.call(this, params);
+    this._ad = [];
+    this._size = [];
+    this._inputs = [];
+  }
+  ModelEditorItem_TypedArray.prototype.onchange = function() {
+    var i, input, w, _i, _j, _len, _len2, _len3, _ref, _ref2, _ref3, _results;
+    if (!this._same_parms()) {
+      this._size = this.model.size();
+      _ref = this._inputs;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        i = _ref[_i];
+        this.ed.removeChild(i);
+      }
+      _ref2 = this._ad;
+      for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
+        i = _ref2[_j];
+        this.ed.removeChild(i);
+      }
+      this._ad = [];
+      w = this.ew / this.model.size(0);
+      if (this.model.dim() > 1) {
+        w = 100 / this.model.size(0);
+        this._ad.push(new_dom_element({
+          parentNode: this.ed,
+          nodeName: "span",
+          style: {
+            display: "inline-block",
+            width: this.ew + "%"
+          }
+        }));
+      }
+      this._inputs = (function() {
+        var _ref, _results;
+        _results = [];
+        for (i = 0, _ref = this.model.nb_items(); (0 <= _ref ? i < _ref : i > _ref); (0 <= _ref ? i += 1 : i -= 1)) {
+          _results.push(__bind(function(i) {
+            var input;
+            return input = new_dom_element({
+              parentNode: this.ed,
+              type: "text",
+              nodeName: "input",
+              style: {
+                width: w + "%"
+              },
+              onchange: __bind(function() {
+                this.snapshot();
+                return this.model.set_val(i, input.value);
+              }, this),
+              onfocus: __bind(function() {
+                var _ref;
+                return (_ref = this.get_focus()) != null ? _ref.set(this.view_id) : void 0;
+              }, this)
+            });
+          }, this)(i));
+        }
+        return _results;
+      }).call(this);
+    }
+    _ref3 = this._inputs;
+    _results = [];
+    for (i = 0, _len3 = _ref3.length; i < _len3; i++) {
+      input = _ref3[i];
+      _results.push(input.value = this.model.get(i));
+    }
+    return _results;
+  };
+  ModelEditorItem_TypedArray.prototype._same_parms = function() {
+    var i, v, _len, _ref;
+    if (this._size.length !== this.model.dim()) {
+      return false;
+    }
+    _ref = this._size;
+    for (i = 0, _len = _ref.length; i < _len; i++) {
+      v = _ref[i];
+      if (v !== this.model.size(i)) {
+        return false;
+      }
+    }
+    return true;
+  };
+  return ModelEditorItem_TypedArray;
 })();
+ModelEditorItem.default_types.unshift(function(model) {
+  if (model instanceof TypedArray) {
+    return ModelEditorItem_TypedArray;
+  }
+});

@@ -1,5 +1,4 @@
 var test_TreeApp;
-
 test_TreeApp = function() {
   var m, v;
   m = new TreeAppData;

@@ -1,22 +1,18 @@
-var Model,
-  __indexOf = Array.prototype.indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
-
+var Model;
+var __indexOf = Array.prototype.indexOf || function(item) {
+  for (var i = 0, l = this.length; i < l; i++) {
+    if (this[i] === item) return i;
+  }
+  return -1;
+};
 Model = (function() {
-
   Model._counter = 0;
-
   Model._modlist = {};
-
   Model._n_views = {};
-
   Model._cur_mid = 0;
-
   Model._timeout = void 0;
-
   Model._force_m = false;
-
   Model._synchro = void 0;
-
   function Model(attr) {
     this._attribute_names = [];
     this.model_id = Model._cur_mid;
@@ -24,21 +20,21 @@ Model = (function() {
     this._views = [];
     this._parents = [];
     this._date_last_modification = Model._counter + 2;
-    if (attr != null) this._set(attr);
+    if (attr != null) {
+      this._set(attr);
+    }
   }
-
   Model.prototype.destructor = function() {};
-
   Model.prototype.has_been_modified = function() {
     return this._date_last_modification > Model._counter - 2 || Model._force_m;
   };
-
   Model.prototype.has_been_directly_modified = function() {
     return this._date_last_modification > Model._counter - 1 || Model._force_m;
   };
-
   Model.prototype.bind = function(f, onchange_construction) {
-    if (onchange_construction == null) onchange_construction = true;
+    if (onchange_construction == null) {
+      onchange_construction = true;
+    }
     if (f instanceof View) {
       this._views.push(f);
       f._models.push(this);
@@ -50,7 +46,6 @@ Model = (function() {
       return new BindView(this, onchange_construction, f);
     }
   };
-
   Model.prototype.unbind = function(f) {
     var v, _i, _len, _ref, _results;
     if (f instanceof View) {
@@ -61,12 +56,13 @@ Model = (function() {
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         v = _ref[_i];
-        if (v instanceof BindView && v.f === f) _results.push(this.unbind(v));
+        if (v instanceof BindView && v.f === f) {
+          _results.push(this.unbind(v));
+        }
       }
       return _results;
     }
   };
-
   Model.prototype.get = function() {
     var name, res, _i, _len, _ref;
     res = {};
@@ -77,7 +73,6 @@ Model = (function() {
     }
     return res;
   };
-
   Model.prototype.set = function(value) {
     if (this._set(value)) {
       this._signal_change();
@@ -85,7 +80,6 @@ Model = (function() {
     }
     return false;
   };
-
   Model.prototype.set_state = function(str) {
     var l, lst, map, mid, s, _i, _len;
     map = {};
@@ -93,21 +87,23 @@ Model = (function() {
     mid = lst.shift();
     for (_i = 0, _len = lst.length; _i < _len; _i++) {
       l = lst[_i];
-      if (!l.length) continue;
-      s = l.split(" ");
-      map[s[0]] = {
-        type: s[1],
-        data: s[2],
-        buff: void 0
-      };
+      if (l.length) {
+        s = l.split(" ");
+        map[s[0]] = {
+          type: s[1],
+          data: s[2],
+          buff: void 0
+        };
+      }
     }
     map[mid].buff = this;
     return this._set_state(map[mid].data, map);
   };
-
   Model.prototype.get_state = function(date) {
     var fmm, id, obj, res;
-    if (date == null) date = -1;
+    if (date == null) {
+      date = -1;
+    }
     fmm = {};
     this._get_flat_model_map(fmm, date);
     res = this.model_id.toString();
@@ -119,10 +115,11 @@ Model = (function() {
     }
     return res;
   };
-
   Model.prototype.add_attr = function(n, p, signal_change) {
     var key, val, _results;
-    if (signal_change == null) signal_change = true;
+    if (signal_change == null) {
+      signal_change = true;
+    }
     if (p != null) {
       if (typeof p === "function") {
         return this[n] = p;
@@ -131,45 +128,56 @@ Model = (function() {
           console.error("attribute " + n + " already exists in " + (Model.get_object_class(this)));
         }
         p = Model.conv(p);
-        if (__indexOf.call(p._parents, this) < 0) p._parents.push(this);
+        if (__indexOf.call(p._parents, this) < 0) {
+          p._parents.push(this);
+        }
         this._attribute_names.push(n);
         this[n] = p;
-        if (signal_change) return this._signal_change();
+        if (signal_change) {
+          return this._signal_change();
+        }
       }
     } else {
       _results = [];
       for (key in n) {
         val = n[key];
-        if (val != null) _results.push(this.add_attr(key, val, signal_change));
+        if (val != null) {
+          _results.push(this.add_attr(key, val, signal_change));
+        }
       }
       return _results;
     }
   };
-
   Model.prototype.rem_attr = function(name, signal_change) {
     var c, i;
-    if (signal_change == null) signal_change = true;
+    if (signal_change == null) {
+      signal_change = true;
+    }
     c = this[name];
     if (c) {
       i = c._parents.indexOf(this);
       if (i >= 0) {
         c._parents.splice(i, 1);
-        if (c._parents.length === 0) c.destructor();
+        if (c._parents.length === 0) {
+          c.destructor();
+        }
       }
       delete this[name];
       i = this._attribute_names.indexOf(name);
-      if (i >= 0) this._attribute_names.splice(i, 1);
-      if (signal_change) return this._signal_change();
+      if (i >= 0) {
+        this._attribute_names.splice(i, 1);
+      }
+      if (signal_change) {
+        return this._signal_change();
+      }
     }
   };
-
   Model.prototype.mod_attr = function(n, p) {
     if (this[n] !== p) {
       this.rem_attr(n);
       return this.add_attr(n, p);
     }
   };
-
   Model.prototype.set_attr = function(o) {
     var k, r, to_rem, v, _i, _len, _results;
     for (k in o) {
@@ -182,7 +190,9 @@ Model = (function() {
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         k = _ref[_i];
-        if (!(o[k] != null)) _results.push(k);
+        if (!(o[k] != null)) {
+          _results.push(k);
+        }
       }
       return _results;
     }).call(this);
@@ -193,39 +203,47 @@ Model = (function() {
     }
     return _results;
   };
-
   Model.prototype.size = function(for_display) {
-    if (for_display == null) for_display = false;
+    if (for_display == null) {
+      for_display = false;
+    }
     return [];
   };
-
   Model.prototype.dim = function(for_display) {
-    if (for_display == null) for_display = false;
+    if (for_display == null) {
+      for_display = false;
+    }
     return this.size(for_display).length;
   };
-
   Model.prototype.equals = function(m) {
     var key, u, val, _i, _j, _len, _len2, _ref, _ref2;
-    if (this === m) return true;
+    if (this === m) {
+      return true;
+    }
     if (m._attribute_names != null) {
       u = {};
       _ref = m._attribute_names;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         key = _ref[_i];
         val = m[key];
-        if (!(this[key] != null)) return false;
-        if (!this[key].equals(val)) return false;
+        if (!(this[key] != null)) {
+          return false;
+        }
+        if (!this[key].equals(val)) {
+          return false;
+        }
         u[key] = true;
       }
       _ref2 = this._attribute_names;
       for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
         key = _ref2[_j];
-        if (!(u[key] != null)) return false;
+        if (!(u[key] != null)) {
+          return false;
+        }
       }
     }
     return false;
   };
-
   Model.prototype.get_parents_that_check = function(func_to_check) {
     var res, visited;
     res = [];
@@ -233,7 +251,6 @@ Model = (function() {
     this._get_parents_that_check_rec(res, visited, func_to_check);
     return res;
   };
-
   Model.prototype.deep_copy = function() {
     var key, o, _i, _len, _ref;
     o = {};
@@ -246,7 +263,6 @@ Model = (function() {
     __new__.set_attr(o);
     return __new__;
   };
-
   Model.prototype.real_change = function() {
     var a, _i, _len, _ref;
     if (this.has_been_directly_modified() && !this._attribute_names.length) {
@@ -258,15 +274,15 @@ Model = (function() {
       if (typeof this.cosmetic_attribute === "function" ? this.cosmetic_attribute(a) : void 0) {
         continue;
       }
-      if (this[a].real_change()) return true;
+      if (this[a].real_change()) {
+        return true;
+      }
     }
     return false;
   };
-
   Model.prototype.cosmetic_attribute = function(name) {
     return false;
   };
-
   Model.new_from_state = function(str) {
     var l, lst, map, mid, s, _i, _len;
     map = {};
@@ -274,42 +290,55 @@ Model = (function() {
     mid = lst.shift();
     for (_i = 0, _len = lst.length; _i < _len; _i++) {
       l = lst[_i];
-      if (!l.length) continue;
-      s = l.split(" ");
-      map[s[0]] = {
-        type: s[1],
-        data: s[2],
-        buff: void 0
-      };
+      if (l.length) {
+        s = l.split(" ");
+        map[s[0]] = {
+          type: s[1],
+          data: s[2],
+          buff: void 0
+        };
+      }
     }
     eval("var __new__ = new " + map[mid].type + ";");
     __new__._set_state(map[mid].data, map);
     return __new__;
   };
-
   Model.load = function(filename, func) {
-    if (!Model.synchronizer) Model._synchro = new Synchronizer;
+    if (!Model.synchronizer) {
+      Model._synchro = new Synchronizer;
+    }
     return Model._synchro.load(filename, func);
   };
-
   Model.conv = function(v) {
-    if (v instanceof Model) return v;
-    if (v instanceof Array) return new Lst(v);
-    if (typeof v === "string") return new Str(v);
-    if (typeof v === "number") return new Val(v);
-    if (typeof v === "boolean") return new Bool(v);
-    if (v instanceof Object) return new Model(v);
+    if (v instanceof Model) {
+      return v;
+    }
+    if (v instanceof Array) {
+      return new Lst(v);
+    }
+    if (typeof v === "string") {
+      return new Str(v);
+    }
+    if (typeof v === "number") {
+      return new Val(v);
+    }
+    if (typeof v === "boolean") {
+      return new Bool(v);
+    }
+    if (v instanceof Object) {
+      return new Model(v);
+    }
     return new Obj(v);
   };
-
   Model.get_object_class = function(obj) {
     var arr;
     if (obj && obj.constructor && obj.constructor.toString) {
       arr = obj.constructor.toString().match(/function\s*(\w+)/);
-      if (arr && arr.length === 2) return arr[1];
+      if (arr && arr.length === 2) {
+        return arr[1];
+      }
     }
   };
-
   Model.prototype._get_state = function() {
     var name, str;
     str = (function() {
@@ -324,7 +353,6 @@ Model = (function() {
     }).call(this);
     return str.join(",");
   };
-
   Model.prototype._get_fs_data = function(out) {
     var name, obj, str;
     FileSystem.set_server_id_if_necessary(out, this);
@@ -342,7 +370,6 @@ Model = (function() {
     }).call(this);
     return out.mod += "C " + this._server_id + " " + (str.join(",")) + " ";
   };
-
   Model.prototype._set = function(value) {
     var change, key, used, val, _i, _j, _len, _len2, _ref, _ref2;
     change = false;
@@ -353,12 +380,14 @@ Model = (function() {
       used[key] = true;
     }
     _ref2 = (function() {
-      var _k, _len2, _ref2, _results;
-      _ref2 = this._attribute_names;
+      var _i, _len, _ref, _results;
+      _ref = this._attribute_names;
       _results = [];
-      for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-        key = _ref2[_k];
-        if (!used[key]) _results.push(key);
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        key = _ref[_i];
+        if (!used[key]) {
+          _results.push(key);
+        }
       }
       return _results;
     }).call(this);
@@ -384,7 +413,6 @@ Model = (function() {
     }
     return change;
   };
-
   Model._get_attribute_names = function(m) {
     var key, val, _results;
     if (m instanceof Model) {
@@ -398,10 +426,11 @@ Model = (function() {
       return _results;
     }
   };
-
   Model.prototype._signal_change = function(change_level) {
     var p, _i, _len, _ref;
-    if (change_level == null) change_level = 2;
+    if (change_level == null) {
+      change_level = 2;
+    }
     if (change_level === 2 && (this._server_id != null)) {
       FileSystem.signal_change(this);
     }
@@ -416,7 +445,6 @@ Model = (function() {
     }
     return Model._need_sync_views();
   };
-
   Model.prototype._set_state = function(str, map) {
     var attr, inr, k_id, spl, u, _i, _j, _len, _len2, _ref, _ref2, _results;
     u = {};
@@ -445,15 +473,10 @@ Model = (function() {
     _results = [];
     for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
       attr = _ref2[_j];
-      if (!u[attr]) {
-        _results.push(this.rem_attr(attr));
-      } else {
-        _results.push(void 0);
-      }
+      _results.push(!u[attr] ? this.rem_attr(attr) : void 0);
     }
     return _results;
   };
-
   Model.prototype._get_parents_that_check_rec = function(res, visited, func_to_check) {
     var p, _i, _len, _ref, _results;
     if (!(visited[this.model_id] != null)) {
@@ -471,7 +494,6 @@ Model = (function() {
       }
     }
   };
-
   Model.prototype._set_state_if_same_type = function(mid, map) {
     var dat;
     dat = map[mid];
@@ -482,7 +504,6 @@ Model = (function() {
     }
     return false;
   };
-
   Model.prototype._get_flat_model_map = function(map, date) {
     var name, obj, _i, _len, _ref, _results;
     map[this.model_id] = this;
@@ -491,19 +512,10 @@ Model = (function() {
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       name = _ref[_i];
       obj = this[name];
-      if (!(map[obj.model_id] != null)) {
-        if (obj._date_last_modification > date) {
-          _results.push(obj._get_flat_model_map(map, date));
-        } else {
-          _results.push(void 0);
-        }
-      } else {
-        _results.push(void 0);
-      }
+      _results.push(!(map[obj.model_id] != null) ? obj._date_last_modification > date ? obj._get_flat_model_map(map, date) : void 0 : void 0);
     }
     return _results;
   };
-
   Model._new_model_from_state = function(mid, map) {
     var info;
     info = map[mid];
@@ -511,13 +523,11 @@ Model = (function() {
     info.buff._set_state(info.data, map);
     return info.buff;
   };
-
   Model._need_sync_views = function() {
     if (!(Model._timeout != null)) {
       return Model._timeout = setTimeout(Model._sync_views, 1);
     }
   };
-
   Model._sync_views = function() {
     var id, model, view, views, _i, _len, _ref, _ref2, _ref3;
     views = {};
@@ -552,11 +562,8 @@ Model = (function() {
     }
     return Model._force_m = false;
   };
-
   return Model;
-
-})();
-var Obj;
+})();var Obj;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -604,130 +611,7 @@ Obj = (function() {
     return this.set(str);
   };
   return Obj;
-})();var View, bind;
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-View = (function() {
-  View._cur_view_id = 0;
-  function View(m, onchange_construction) {
-    var i, _i, _len;
-    if (onchange_construction == null) {
-      onchange_construction = true;
-    }
-    this.view_id = View._cur_view_id;
-    View._cur_view_id += 1;
-    this._models = [];
-    if (m instanceof Model) {
-      m.bind(this, onchange_construction);
-    } else if (m.length != null) {
-      for (_i = 0, _len = m.length; _i < _len; _i++) {
-        i = m[_i];
-        i.bind(this, onchange_construction);
-      }
-    } else if (m != null) {
-      console.error("View constructor doesn't know what to do with", m);
-    }
-  }
-  View.prototype.destructor = function() {
-    var i, m, _i, _len, _ref, _results;
-    _ref = this._models;
-    _results = [];
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      m = _ref[_i];
-      i = m._views.indexOf(this);
-      _results.push(i >= 0 ? m._views.splice(i, 1) : void 0);
-    }
-    return _results;
-  };
-  View.prototype.onchange = function() {};
-  return View;
-})();
-bind = __bind(function(m, f) {
-  var i, _i, _len, _results;
-  if (m instanceof Model) {
-    return m.bind(f);
-  } else {
-    _results = [];
-    for (_i = 0, _len = m.length; _i < _len; _i++) {
-      i = m[_i];
-      _results.push(i.bind(f));
-    }
-    return _results;
-  }
-}, this);var Str,
-  __hasProp = Object.prototype.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
-
-Str = (function(_super) {
-
-  __extends(Str, _super);
-
-  function Str(data) {
-    Str.__super__.constructor.call(this);
-    this._data = "";
-    this.length = 0;
-    if (data != null) this._set(data);
-  }
-
-  Str.prototype.toggle = function(str, space) {
-    var i, l;
-    if (space == null) space = " ";
-    l = this._data.split(space);
-    i = l.indexOf(str);
-    if (i < 0) {
-      l.push(str);
-    } else {
-      l.splice(i, 1);
-    }
-    return this.set(l.join(" "));
-  };
-
-  Str.prototype.contains = function(str) {
-    return this._data.indexOf(str) >= 0;
-  };
-
-  Str.prototype.equals = function(str) {
-    return this._data === str.toString();
-  };
-
-  Str.prototype.ends_with = function(str) {
-    var l;
-    l = this._data.match(str + "$");
-    return (l != null ? l.length : void 0) && l[0] === str;
-  };
-
-  Str.prototype.deep_copy = function() {
-    return new Str(this._data + "");
-  };
-
-  Str.prototype._get_fs_data = function(out) {
-    FileSystem.set_server_id_if_necessary(out, this);
-    return out.mod += "C " + this._server_id + " " + (encodeURI(this._data)) + " ";
-  };
-
-  Str.prototype._set = function(value) {
-    var n;
-    if (!(value != null)) return this._set("");
-    n = value.toString();
-    if (this._data !== n) {
-      this._data = n;
-      this.length = this._data.length;
-      return true;
-    }
-    return false;
-  };
-
-  Str.prototype._get_state = function() {
-    return encodeURI(this._data);
-  };
-
-  Str.prototype._set_state = function(str, map) {
-    return this.set(decodeURIComponent(str));
-  };
-
-  return Str;
-
-})(Obj);
-var Lst;
+})();var Lst;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -750,7 +634,7 @@ Lst = (function() {
     s = this.static_length();
     if (s >= 0) {
       d = this.default_value();
-      for (i = 0; 0 <= s ? i < s : i > s; 0 <= s ? i++ : i--) {
+      for (i = 0; (0 <= s ? i < s : i > s); (0 <= s ? i += 1 : i -= 1)) {
         this.push(d, true);
       }
     }
@@ -765,7 +649,7 @@ Lst = (function() {
     return 0;
   };
   Lst.prototype.base_type = function() {
-    return;
+    return void 0;
   };
   Lst.prototype.get = function() {
     var i, _i, _len, _results;
@@ -801,7 +685,7 @@ Lst = (function() {
     if (this.length !== lst.length) {
       return false;
     }
-    for (i = 0, _ref = this.length; 0 <= _ref ? i < _ref : i > _ref; 0 <= _ref ? i++ : i--) {
+    for (i = 0, _ref = this.length; (0 <= _ref ? i < _ref : i > _ref); (0 <= _ref ? i += 1 : i -= 1)) {
       if (!this[i].equals(lst[i])) {
         return false;
       }
@@ -869,7 +753,7 @@ Lst = (function() {
       element._parents.push(this);
     }
     if (this.length) {
-      for (i = _ref = this.length - 1; _ref <= 0 ? i <= 0 : i >= 0; _ref <= 0 ? i++ : i--) {
+      for (i = _ref = this.length - 1; (_ref <= 0 ? i <= 0 : i >= 0); (_ref <= 0 ? i += 1 : i -= 1)) {
         this[i + 1] = this[i];
       }
     }
@@ -917,6 +801,7 @@ Lst = (function() {
         return i;
       }
     }
+    return void 0;
   };
   Lst.prototype.sorted = function(fun_sort) {
     var it, new_array, _i, _len;
@@ -940,7 +825,7 @@ Lst = (function() {
   };
   Lst.prototype.indexOf = function(v) {
     var i, _ref;
-    for (i = 0, _ref = this.length; 0 <= _ref ? i < _ref : i > _ref; 0 <= _ref ? i++ : i--) {
+    for (i = 0, _ref = this.length; (0 <= _ref ? i < _ref : i > _ref); (0 <= _ref ? i += 1 : i -= 1)) {
       if (this[i].equals(v)) {
         return i;
       }
@@ -949,7 +834,7 @@ Lst = (function() {
   };
   Lst.prototype.indexOf_ref = function(v) {
     var i, _ref;
-    for (i = 0, _ref = this.length; 0 <= _ref ? i < _ref : i > _ref; 0 <= _ref ? i++ : i--) {
+    for (i = 0, _ref = this.length; (0 <= _ref ? i < _ref : i > _ref); (0 <= _ref ? i += 1 : i -= 1)) {
       if (this[i] === v) {
         return i;
       }
@@ -996,7 +881,7 @@ Lst = (function() {
       end = this.length;
     }
     tab = new Lst;
-    for (i = begin; begin <= end ? i < end : i > end; begin <= end ? i++ : i--) {
+    for (i = begin; (begin <= end ? i < end : i > end); (begin <= end ? i += 1 : i -= 1)) {
       tab.push(this[i].get());
     }
     return tab;
@@ -1025,13 +910,13 @@ Lst = (function() {
     if (this._static_size_check(false)) {
       return;
     }
-    for (i = index, _ref = Math.min(index + n, this.length); index <= _ref ? i < _ref : i > _ref; index <= _ref ? i++ : i--) {
+    for (i = index, _ref = Math.min(index + n, this.length); (index <= _ref ? i < _ref : i > _ref); (index <= _ref ? i += 1 : i -= 1)) {
       this.rem_attr(i);
     }
-    for (i = index, _ref2 = this.length - n; index <= _ref2 ? i < _ref2 : i > _ref2; index <= _ref2 ? i++ : i--) {
+    for (i = index, _ref2 = this.length - n; (index <= _ref2 ? i < _ref2 : i > _ref2); (index <= _ref2 ? i += 1 : i -= 1)) {
       this[i] = this[i + n];
     }
-    for (i = _ref3 = this.length - n, _ref4 = this.length; _ref3 <= _ref4 ? i < _ref4 : i > _ref4; _ref3 <= _ref4 ? i++ : i--) {
+    for (i = _ref3 = this.length - n, _ref4 = this.length; (_ref3 <= _ref4 ? i < _ref4 : i > _ref4); (_ref3 <= _ref4 ? i += 1 : i -= 1)) {
       delete this[i];
     }
     this.length -= n;
@@ -1044,7 +929,7 @@ Lst = (function() {
       o = (function() {
         var _results;
         _results = [];
-        for (i = 0; 0 <= l ? i < l : i > l; 0 <= l ? i++ : i--) {
+        for (i = 0; (0 <= l ? i < l : i > l); (0 <= l ? i += 1 : i -= 1)) {
           _results.push(this.pop());
         }
         return _results;
@@ -1083,7 +968,7 @@ Lst = (function() {
   Lst.prototype.deep_copy = function() {
     var i, res, _ref;
     res = new Lst;
-    for (i = 0, _ref = this.length; 0 <= _ref ? i < _ref : i > _ref; 0 <= _ref ? i++ : i--) {
+    for (i = 0, _ref = this.length; (0 <= _ref ? i < _ref : i > _ref); (0 <= _ref ? i += 1 : i -= 1)) {
       res.push(this[i].deep_copy());
     }
     return res;
@@ -1111,7 +996,7 @@ Lst = (function() {
     if (s >= 0 && change) {
       console.error("resizing a static array (type " + (Model.get_object_class(this)) + ") is forbidden");
     }
-    for (p = 0, _ref = value.length; 0 <= _ref ? p < _ref : p > _ref; 0 <= _ref ? p++ : p--) {
+    for (p = 0, _ref = value.length; (0 <= _ref ? p < _ref : p > _ref); (0 <= _ref ? p += 1 : p -= 1)) {
       if (p < this.length) {
         change |= this[p].set(value[p]);
       } else if (s < 0) {
@@ -1172,7 +1057,7 @@ Lst = (function() {
     while (this.length > l_id.length) {
       this.pop();
     }
-    for (attr = 0, _ref = this.length; 0 <= _ref ? attr < _ref : attr > _ref; 0 <= _ref ? attr++ : attr--) {
+    for (attr = 0, _ref = this.length; (0 <= _ref ? attr < _ref : attr > _ref); (0 <= _ref ? attr += 1 : attr -= 1)) {
       k_id = l_id[attr];
       if (map[k_id].buff != null) {
         if (map[k_id].buff !== this[attr]) {
@@ -1183,7 +1068,7 @@ Lst = (function() {
       }
     }
     _results = [];
-    for (attr = _ref2 = this.length, _ref3 = l_id.length; _ref2 <= _ref3 ? attr < _ref3 : attr > _ref3; _ref2 <= _ref3 ? attr++ : attr--) {
+    for (attr = _ref2 = this.length, _ref3 = l_id.length; (_ref2 <= _ref3 ? attr < _ref3 : attr > _ref3); (_ref2 <= _ref3 ? attr += 1 : attr -= 1)) {
       k_id = l_id[attr];
       _results.push(map[k_id].buff != null ? this.push(map[k_id].buff) : this.push(Model._new_model_from_state(k_id, map)));
     }
@@ -1197,7 +1082,127 @@ Lst = (function() {
     return false;
   };
   return Lst;
-})();var Bool;
+})();var Str;
+var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+Str = (function() {
+  __extends(Str, Obj);
+  function Str(data) {
+    Str.__super__.constructor.call(this);
+    this._data = "";
+    this.length = 0;
+    if (data != null) {
+      this._set(data);
+    }
+  }
+  Str.prototype.toggle = function(str, space) {
+    var i, l;
+    if (space == null) {
+      space = " ";
+    }
+    l = this._data.split(space);
+    i = l.indexOf(str);
+    if (i < 0) {
+      l.push(str);
+    } else {
+      l.splice(i, 1);
+    }
+    return this.set(l.join(" "));
+  };
+  Str.prototype.contains = function(str) {
+    return this._data.indexOf(str) >= 0;
+  };
+  Str.prototype.equals = function(str) {
+    return this._data === str.toString();
+  };
+  Str.prototype.ends_with = function(str) {
+    var l;
+    l = this._data.match(str + "$");
+    return (l != null ? l.length : void 0) && l[0] === str;
+  };
+  Str.prototype.deep_copy = function() {
+    return new Str(this._data + "");
+  };
+  Str.prototype._get_fs_data = function(out) {
+    FileSystem.set_server_id_if_necessary(out, this);
+    return out.mod += "C " + this._server_id + " " + (encodeURI(this._data)) + " ";
+  };
+  Str.prototype._set = function(value) {
+    var n;
+    if (!(value != null)) {
+      return this._set("");
+    }
+    n = value.toString();
+    if (this._data !== n) {
+      this._data = n;
+      this.length = this._data.length;
+      return true;
+    }
+    return false;
+  };
+  Str.prototype._get_state = function() {
+    return encodeURI(this._data);
+  };
+  Str.prototype._set_state = function(str, map) {
+    return this.set(decodeURIComponent(str));
+  };
+  return Str;
+})();var View, bind;
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+View = (function() {
+  View._cur_view_id = 0;
+  function View(m, onchange_construction) {
+    var i, _i, _len;
+    if (onchange_construction == null) {
+      onchange_construction = true;
+    }
+    this.view_id = View._cur_view_id;
+    View._cur_view_id += 1;
+    this._models = [];
+    if (m instanceof Model) {
+      m.bind(this, onchange_construction);
+    } else if (m.length != null) {
+      for (_i = 0, _len = m.length; _i < _len; _i++) {
+        i = m[_i];
+        i.bind(this, onchange_construction);
+      }
+    } else if (m != null) {
+      console.error("View constructor doesn't know what to do with", m);
+    }
+  }
+  View.prototype.destructor = function() {
+    var i, m, _i, _len, _ref, _results;
+    _ref = this._models;
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      m = _ref[_i];
+      i = m._views.indexOf(this);
+      _results.push(i >= 0 ? m._views.splice(i, 1) : void 0);
+    }
+    return _results;
+  };
+  View.prototype.onchange = function() {};
+  return View;
+})();
+bind = __bind(function(m, f) {
+  var i, _i, _len, _results;
+  if (m instanceof Model) {
+    return m.bind(f);
+  } else {
+    _results = [];
+    for (_i = 0, _len = m.length; _i < _len; _i++) {
+      i = m[_i];
+      _results.push(i.bind(f));
+    }
+    return _results;
+  }
+}, this);var Bool;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -1246,6 +1251,224 @@ Bool = (function() {
     return out.mod += "C " + this._server_id + " " + (1 * Boolean(this._data)) + " ";
   };
   return Bool;
+})();var Button;
+var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+Button = (function() {
+  __extends(Button, Model);
+  function Button(label_off, label_on, state, disabled) {
+    if (label_off == null) {
+      label_off = "Submit";
+    }
+    if (label_on == null) {
+      label_on = label_off;
+    }
+    if (state == null) {
+      state = false;
+    }
+    if (disabled == null) {
+      disabled = false;
+    }
+    Button.__super__.constructor.call(this);
+    this.add_attr({
+      disabled: disabled,
+      state: state,
+      label: [label_off, label_on]
+    });
+  }
+  Button.prototype.get = function() {
+    return this.state.get();
+  };
+  Button.prototype.txt = function() {
+    return this.label[this.state.get() * 1];
+  };
+  Button.prototype.equals = function(a) {
+    return this.state.equals(a);
+  };
+  Button.prototype._set = function(state) {
+    if (this.change_allowed(state)) {
+      return this.state.set(state);
+    }
+  };
+  Button.prototype.toggle = function() {
+    return this.set(!this.get());
+  };
+  Button.prototype.change_allowed = function(state) {
+    return 1;
+  };
+  return Button;
+})();var Text;
+var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+Text = (function() {
+  __extends(Text, Str);
+  function Text(data) {
+    Text.__super__.constructor.call(this);
+    this._data = "";
+    this.length = 0;
+    if (data != null) {
+      this._set(data);
+    }
+  }
+  Text.prototype.toggle = function(str, space) {
+    var i, l;
+    if (space == null) {
+      space = " ";
+    }
+    l = this._data.split(space);
+    i = l.indexOf(str);
+    if (i < 0) {
+      l.push(str);
+    } else {
+      l.splice(i, 1);
+    }
+    return this.set(l.join(" "));
+  };
+  Text.prototype.contains = function(str) {
+    return this._data.indexOf(str) >= 0;
+  };
+  Text.prototype.equals = function(str) {
+    return this._data === str.toString();
+  };
+  Text.prototype.ends_with = function(str) {
+    var l;
+    l = this._data.match(str + "$");
+    return (l != null ? l.length : void 0) && l[0] === str;
+  };
+  Text.prototype.deep_copy = function() {
+    return new Str(this._data + "");
+  };
+  Text.prototype._get_fs_data = function(out) {
+    FileSystem.set_server_id_if_necessary(out, this);
+    return out.mod += "C " + this._server_id + " " + (encodeURI(this._data)) + " ";
+  };
+  Text.prototype._set = function(value) {
+    var n;
+    if (!(value != null)) {
+      return this._set("");
+    }
+    n = value.toString();
+    if (this._data !== n) {
+      this._data = n;
+      this.length = this._data.length;
+      return true;
+    }
+    return false;
+  };
+  Text.prototype._get_state = function() {
+    return encodeURI(this._data);
+  };
+  Text.prototype._set_state = function(str, map) {
+    return this.set(decodeURIComponent(str));
+  };
+  return Text;
+})();var ConstOrNotModel;
+var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+ConstOrNotModel = (function() {
+  __extends(ConstOrNotModel, Model);
+  function ConstOrNotModel(bool, model, check_disabled) {
+    if (check_disabled == null) {
+      check_disabled = true;
+    }
+    ConstOrNotModel.__super__.constructor.call(this);
+    this.add_attr({
+      bool: bool,
+      model: model,
+      check_disabled: check_disabled
+    });
+  }
+  ConstOrNotModel.prototype.get = function() {
+    var _ref;
+    return (_ref = this.model) != null ? _ref.get() : void 0;
+  };
+  ConstOrNotModel.prototype.set = function(value) {
+    var _ref;
+    return (_ref = this.model) != null ? _ref.set(value) : void 0;
+  };
+  ConstOrNotModel.prototype.toString = function() {
+    var _ref;
+    return (_ref = this.model) != null ? _ref.toString() : void 0;
+  };
+  return ConstOrNotModel;
+})();var ConstrainedVal;
+var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+  function ctor() { this.constructor = child; }
+  ctor.prototype = parent.prototype;
+  child.prototype = new ctor;
+  child.__super__ = parent.prototype;
+  return child;
+};
+ConstrainedVal = (function() {
+  __extends(ConstrainedVal, Model);
+  function ConstrainedVal(value, params) {
+    if (params == null) {
+      params = {};
+    }
+    ConstrainedVal.__super__.constructor.call(this);
+    this.add_attr({
+      val: value || 0,
+      _min: params.min != null ? params.min : 0,
+      _max: params.max != null ? params.max : 100,
+      _div: params.div != null ? params.div : 0
+    });
+  }
+  ConstrainedVal.prototype.get = function() {
+    return this.val.get();
+  };
+  ConstrainedVal.prototype.ratio = function() {
+    return (this.val.get() - this._min.get()) / this.delta();
+  };
+  ConstrainedVal.prototype.delta = function() {
+    return this._max.get() - this._min.get();
+  };
+  ConstrainedVal.prototype._set = function(value) {
+    var res;
+    if (value instanceof ConstrainedVal) {
+      return this.val._set(value.get());
+    }
+    res = this.val.set(value);
+    this._check_val();
+    return res;
+  };
+  ConstrainedVal.prototype._check_val = function() {
+    var d, m, n, r, s, v;
+    v = this.val.get();
+    m = this._min.get();
+    n = this._max.get();
+    d = this._div.get();
+    if (v < m) {
+      this.val.set(m);
+    }
+    if (v > n) {
+      this.val.set(n);
+    }
+    if (d) {
+      s = (n - m) / d;
+      r = m + Math.round((this.val.get() - m) / s) * s;
+      return this.val.set(r);
+    }
+  };
+  return ConstrainedVal;
 })();var Choice;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
@@ -1315,7 +1538,7 @@ Choice = (function() {
     return _results;
   };
   return Choice;
-})();var ConstrainedVal;
+})();var BindView;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -1324,78 +1547,16 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 };
-ConstrainedVal = (function() {
-  __extends(ConstrainedVal, Model);
-  function ConstrainedVal(value, params) {
-    if (params == null) {
-      params = {};
-    }
-    ConstrainedVal.__super__.constructor.call(this);
-    this.add_attr({
-      val: value || 0,
-      _min: params.min != null ? params.min : 0,
-      _max: params.max != null ? params.max : 100,
-      _div: params.div != null ? params.div : 0
-    });
+BindView = (function() {
+  __extends(BindView, View);
+  function BindView(model, onchange_construction, f) {
+    this.f = f;
+    BindView.__super__.constructor.call(this, model, onchange_construction);
   }
-  ConstrainedVal.prototype.get = function() {
-    return this.val.get();
+  BindView.prototype.onchange = function() {
+    return this.f();
   };
-  ConstrainedVal.prototype.ratio = function() {
-    return (this.val.get() - this._min.get()) / this.delta();
-  };
-  ConstrainedVal.prototype.delta = function() {
-    return this._max.get() - this._min.get();
-  };
-  ConstrainedVal.prototype._set = function(value) {
-    var res;
-    if (value instanceof ConstrainedVal) {
-      return this.val._set(value.get());
-    }
-    res = this.val.set(value);
-    this._check_val();
-    return res;
-  };
-  ConstrainedVal.prototype._check_val = function() {
-    var d, m, n, r, s, v;
-    v = this.val.get();
-    m = this._min.get();
-    n = this._max.get();
-    d = this._div.get();
-    if (v < m) {
-      this.val.set(m);
-    }
-    if (v > n) {
-      this.val.set(n);
-    }
-    if (d) {
-      s = (n - m) / d;
-      r = m + Math.round((this.val.get() - m) / s) * s;
-      return this.val.set(r);
-    }
-  };
-  return ConstrainedVal;
-})();var Vec;
-var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
-Vec = (function() {
-  __extends(Vec, Lst);
-  function Vec(data) {
-    Vec.__super__.constructor.call(this, data);
-  }
-  Vec.prototype.base_type = function() {
-    return Val;
-  };
-  Vec.prototype._underlying_fs_type = function() {
-    return "Lst";
-  };
-  return Vec;
+  return BindView;
 })();var Val;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
@@ -1457,7 +1618,7 @@ Val = (function() {
     return false;
   };
   return Val;
-})();var ConstOrNotModel;
+})();var Vec;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -1466,175 +1627,16 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 };
-ConstOrNotModel = (function() {
-  __extends(ConstOrNotModel, Model);
-  function ConstOrNotModel(bool, model, check_disabled) {
-    if (check_disabled == null) {
-      check_disabled = true;
-    }
-    ConstOrNotModel.__super__.constructor.call(this);
-    this.add_attr({
-      bool: bool,
-      model: model,
-      check_disabled: check_disabled
-    });
+Vec = (function() {
+  __extends(Vec, Lst);
+  function Vec(data) {
+    Vec.__super__.constructor.call(this, data);
   }
-  ConstOrNotModel.prototype.get = function() {
-    var _ref;
-    return (_ref = this.model) != null ? _ref.get() : void 0;
+  Vec.prototype.base_type = function() {
+    return Val;
   };
-  ConstOrNotModel.prototype.set = function(value) {
-    var _ref;
-    return (_ref = this.model) != null ? _ref.set(value) : void 0;
+  Vec.prototype._underlying_fs_type = function() {
+    return "Lst";
   };
-  ConstOrNotModel.prototype.toString = function() {
-    var _ref;
-    return (_ref = this.model) != null ? _ref.toString() : void 0;
-  };
-  return ConstOrNotModel;
-})();var Text,
-  __hasProp = Object.prototype.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
-
-Text = (function(_super) {
-
-  __extends(Text, _super);
-
-  function Text(data) {
-    Text.__super__.constructor.call(this);
-    this._data = "";
-    this.length = 0;
-    if (data != null) this._set(data);
-  }
-
-  Text.prototype.toggle = function(str, space) {
-    var i, l;
-    if (space == null) space = " ";
-    l = this._data.split(space);
-    i = l.indexOf(str);
-    if (i < 0) {
-      l.push(str);
-    } else {
-      l.splice(i, 1);
-    }
-    return this.set(l.join(" "));
-  };
-
-  Text.prototype.contains = function(str) {
-    return this._data.indexOf(str) >= 0;
-  };
-
-  Text.prototype.equals = function(str) {
-    return this._data === str.toString();
-  };
-
-  Text.prototype.ends_with = function(str) {
-    var l;
-    l = this._data.match(str + "$");
-    return (l != null ? l.length : void 0) && l[0] === str;
-  };
-
-  Text.prototype.deep_copy = function() {
-    return new Str(this._data + "");
-  };
-
-  Text.prototype._get_fs_data = function(out) {
-    FileSystem.set_server_id_if_necessary(out, this);
-    return out.mod += "C " + this._server_id + " " + (encodeURI(this._data)) + " ";
-  };
-
-  Text.prototype._set = function(value) {
-    var n;
-    if (!(value != null)) return this._set("");
-    n = value.toString();
-    if (this._data !== n) {
-      this._data = n;
-      this.length = this._data.length;
-      return true;
-    }
-    return false;
-  };
-
-  Text.prototype._get_state = function() {
-    return encodeURI(this._data);
-  };
-
-  Text.prototype._set_state = function(str, map) {
-    return this.set(decodeURIComponent(str));
-  };
-
-  return Text;
-
-})(Str);
-var BindView;
-var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
-BindView = (function() {
-  __extends(BindView, View);
-  function BindView(model, onchange_construction, f) {
-    this.f = f;
-    BindView.__super__.constructor.call(this, model, onchange_construction);
-  }
-  BindView.prototype.onchange = function() {
-    return this.f();
-  };
-  return BindView;
-})();var Button;
-var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-  for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-  function ctor() { this.constructor = child; }
-  ctor.prototype = parent.prototype;
-  child.prototype = new ctor;
-  child.__super__ = parent.prototype;
-  return child;
-};
-Button = (function() {
-  __extends(Button, Model);
-  function Button(label_off, label_on, state, disabled) {
-    if (label_off == null) {
-      label_off = "Submit";
-    }
-    if (label_on == null) {
-      label_on = label_off;
-    }
-    if (state == null) {
-      state = false;
-    }
-    if (disabled == null) {
-      disabled = false;
-    }
-    Button.__super__.constructor.call(this);
-    this.add_attr({
-      disabled: disabled,
-      state: state,
-      label: [label_off, label_on]
-    });
-  }
-  Button.prototype.get = function() {
-    return this.state.get();
-  };
-  Button.prototype.txt = function() {
-    return this.label[this.state.get() * 1];
-  };
-  Button.prototype.equals = function(a) {
-    return this.state.equals(a);
-  };
-  Button.prototype._set = function(state) {
-    if (this.change_allowed(state)) {
-      return this.state.set(state);
-    }
-  };
-  Button.prototype.toggle = function() {
-    return this.set(!this.get());
-  };
-  Button.prototype.change_allowed = function(state) {
-    return 1;
-  };
-  return Button;
+  return Vec;
 })();

@@ -1,10 +1,18 @@
-var add_class, get_left, get_top, new_dom_element, new_popup, rem_class, _index_current_popup,
-  __indexOf = Array.prototype.indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
-
+var add_class, get_left, get_top, new_dom_element, new_popup, rem_class, _index_current_popup;
+var __indexOf = Array.prototype.indexOf || function(item) {
+  for (var i = 0, l = this.length; i < l; i++) {
+    if (this[i] === item) return i;
+  }
+  return -1;
+};
 new_dom_element = function(params, nodeName) {
   var k, n, name, v, val;
-  if (params == null) params = {};
-  if (nodeName == null) nodeName = "div";
+  if (params == null) {
+    params = {};
+  }
+  if (nodeName == null) {
+    nodeName = "div";
+  }
   n = document.createElement(params.nodeName || nodeName);
   for (name in params) {
     val = params[name];
@@ -30,10 +38,11 @@ new_dom_element = function(params, nodeName) {
   }
   return n;
 };
-
 add_class = function(obj, src) {
   var old, p_1;
-  if (typeof src === "string") return add_class(obj, src.split(" "));
+  if (typeof src === "string") {
+    return add_class(obj, src.split(" "));
+  }
   old = (obj.className || "").split(" ");
   p_1 = src.filter(function(x) {
     return __indexOf.call(old, x) < 0;
@@ -42,16 +51,16 @@ add_class = function(obj, src) {
     return x;
   }).join(" ");
 };
-
 rem_class = function(obj, src) {
   var old;
-  if (typeof src === "string") return rem_class(obj, src.split(" "));
+  if (typeof src === "string") {
+    return rem_class(obj, src.split(" "));
+  }
   old = (obj.className || "").split(" ");
   return obj.className = (old.filter(function(x) {
     return __indexOf.call(src, x) < 0;
   })).join(" ");
 };
-
 get_left = function(l) {
   if (l.offsetParent != null) {
     return l.offsetLeft + get_left(l.offsetParent);
@@ -59,7 +68,6 @@ get_left = function(l) {
     return l.offsetLeft;
   }
 };
-
 get_top = function(l) {
   if (l.offsetParent != null) {
     return l.offsetTop + get_top(l.offsetParent);
@@ -67,25 +75,33 @@ get_top = function(l) {
     return l.offsetTop;
   }
 };
-
 _index_current_popup = 100;
-
 new_popup = function(title, params) {
   var b, clientX, clientY, close_element, extention, height, old_x, old_y, repos, res, t, top_x, top_y, w, width, _drag_end_func, _drag_evt_func;
-  if (params == null) params = {};
+  if (params == null) {
+    params = {};
+  }
   b = new_dom_element({
     parentNode: document.body,
     id: "popup_closer",
     onmousedown: function() {
-      if (typeof params.onclose === "function") params.onclose();
+      if (typeof params.onclose === "function") {
+        params.onclose();
+      }
       document.body.removeChild(b);
       return document.body.removeChild(w);
     },
     ondrop: function(evt) {
-      if (!evt) evt = window.event;
+      if (!evt) {
+        evt = window.event;
+      }
       evt.cancelBubble = true;
-      if (typeof evt.stopPropagation === "function") evt.stopPropagation();
-      if (typeof evt.preventDefault === "function") evt.preventDefault();
+      if (typeof evt.stopPropagation === "function") {
+        evt.stopPropagation();
+      }
+      if (typeof evt.preventDefault === "function") {
+        evt.preventDefault();
+      }
       if (typeof evt.stopImmediatePropagation === "function") {
         evt.stopImmediatePropagation();
       }
@@ -114,8 +130,12 @@ new_popup = function(title, params) {
   old_x = 0;
   old_y = 0;
   w = void 0;
-  if (params.width != null) width = params.width;
-  if (params.height != null) height = params.height;
+  if (params.width != null) {
+    width = params.width;
+  }
+  if (params.height != null) {
+    height = params.height;
+  }
   repos = function() {
     top_x = clientX - w.clientWidth / 2;
     top_y = clientY - w.clientHeight / 2;
@@ -125,8 +145,12 @@ new_popup = function(title, params) {
     if ((top_y + w.clientHeight) > window.innerHeight) {
       top_y = window.innerHeight - w.clientHeight + 50;
     }
-    if (top_x < 50) top_x = 50;
-    if (top_y < 50) top_y = 50;
+    if (top_x < 50) {
+      top_x = 50;
+    }
+    if (top_y < 50) {
+      top_y = 50;
+    }
     w.style.left = top_x;
     return w.style.top = top_y;
   };
@@ -174,7 +198,9 @@ new_popup = function(title, params) {
     className: "PopupClose",
     txt: "Close",
     onmousedown: function(evt) {
-      if (typeof params.onclose === "function") params.onclose();
+      if (typeof params.onclose === "function") {
+        params.onclose();
+      }
       document.body.removeChild(b);
       return document.body.removeChild(w);
     }
@@ -202,6 +228,8 @@ new_popup = function(title, params) {
       padding: "6px"
     }
   });
-  if (params.child != null) res.appendChild(params.child);
+  if (params.child != null) {
+    res.appendChild(params.child);
+  }
   return res;
 };

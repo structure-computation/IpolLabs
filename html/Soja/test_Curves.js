@@ -1,5 +1,4 @@
 var test_Curves;
-
 test_Curves = function() {
   var c, d, editor, g, m;
   d = new_dom_element({
@@ -50,7 +49,9 @@ test_Curves = function() {
     item_width: 48
   });
   editor.default_types.push(function(model) {
-    if (model instanceof Bool) return ModelEditorItem_Bool_Img;
+    if (model instanceof Bool) {
+      return ModelEditorItem_Bool_Img;
+    }
   });
   new_model_editor({
     el: g,

@@ -1,5 +1,4 @@
 var test_ModelEditor;
-
 test_ModelEditor = function() {
   var docbod, editor, focus, model, spacing;
   focus = new Val(-1);
@@ -79,9 +78,13 @@ test_ModelEditor = function() {
   });
   editor.label_ratio = 0.2;
   editor.default_types.push(function(model) {
-    if (model instanceof Choice) return ModelEditorItem_Choice_Roll;
+    if (model instanceof Choice) {
+      return ModelEditorItem_Choice_Roll;
+    }
   });
   return editor.default_types.push(function(model) {
-    if (model instanceof Bool) return ModelEditorItem_Bool_Img;
+    if (model instanceof Bool) {
+      return ModelEditorItem_Bool_Img;
+    }
   });
 };

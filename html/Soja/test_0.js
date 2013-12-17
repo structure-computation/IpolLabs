@@ -1,5 +1,4 @@
 var test_0;
-
 test_0 = function() {
   var m;
   m = new Model({
