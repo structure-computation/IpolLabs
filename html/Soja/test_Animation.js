@@ -1,5 +1,4 @@
 var test_Animation;
-
 test_Animation = function() {
   var add_butt, m, v, _results;
   add_butt = function(txt, fun) {

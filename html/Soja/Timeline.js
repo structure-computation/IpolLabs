@@ -42,7 +42,7 @@ Timeline = (function() {
           continue;
         }
         _results.push(__bind(function(m) {
-          var act, current_picture_name, j, player_button, speed, speed_container, speed_txt, _len2, _ref2, _results2;
+          var act, current_picture_name, j, player_button, speed, speed_container, speed_txt, _len, _ref, _results;
           speed_container = new_dom_element({
             parentNode: this.div,
             nodeName: "span",
@@ -70,12 +70,12 @@ Timeline = (function() {
             parentNode: this.div,
             id: "timeline_player_button"
           });
-          _ref2 = m.actions;
-          _results2 = [];
-          for (j = 0, _len2 = _ref2.length; j < _len2; j++) {
-            act = _ref2[j];
+          _ref = m.actions;
+          _results = [];
+          for (j = 0, _len = _ref.length; j < _len; j++) {
+            act = _ref[j];
             if (act.vis !== false) {
-              _results2.push(__bind(function(act) {
+              _results.push(__bind(function(act) {
                 var editor, key, scroll_pane, span_container;
                 if (act.mod != null) {
                   scroll_pane = new_dom_element({
@@ -106,7 +106,7 @@ Timeline = (function() {
               }, this)(act));
             }
           }
-          return _results2;
+          return _results;
         }, this)(m));
       }
     }

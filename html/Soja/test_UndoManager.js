@@ -1,5 +1,4 @@
 var test_UndoManager;
-
 test_UndoManager = function() {
   var a, add_butt, m;
   add_butt = function(txt, fun) {

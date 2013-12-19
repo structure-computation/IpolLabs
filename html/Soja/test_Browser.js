@@ -1,5 +1,4 @@
 var test_Browser;
-
 test_Browser = function() {
   var fs;
   fs = new FileSystem;

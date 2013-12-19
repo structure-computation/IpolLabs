@@ -1,5 +1,4 @@
 var test_LayoutManager;
-
 test_LayoutManager = function() {
   var l, m;
   m = new LayoutManagerData({

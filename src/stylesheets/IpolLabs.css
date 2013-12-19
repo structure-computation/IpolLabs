@@ -37,7 +37,7 @@ body {
 }
 
 
-.apps_container{
+/*.apps_container{
     //height:     300px;
     width:      100%;
 }
@@ -54,7 +54,7 @@ body {
     border-radius        : 5px;
 }
 .app_icon:hover {
-    background: #c6c6c6; /*lightBlue;*/
+    background: #c6c6c6; 
     cursor:pointer;
 }
 
@@ -128,4 +128,4 @@ body {
     float:      left;
     background-image     : url('img/youtube_32.png');
     background-position  : center;
-}
+}*/

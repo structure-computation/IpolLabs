@@ -1,5 +1,4 @@
 var test_CanvasManager, test_disp_img;
-
 test_disp_img = function() {
   var browser_state, c, ci, i, j, m, np, tl, _ref, _ref2;
   c = new CanvasManager({
@@ -10,8 +9,8 @@ test_disp_img = function() {
   m = new Mesh;
   c.items.push(m);
   np = 20;
-  for (i = 0; 0 <= np ? i < np : i > np; 0 <= np ? i++ : i--) {
-    for (j = 0; 0 <= np ? j < np : j > np; 0 <= np ? j++ : j--) {
+  for (i = 0; (0 <= np ? i < np : i > np); (0 <= np ? i += 1 : i -= 1)) {
+    for (j = 0; (0 <= np ? j < np : j > np); (0 <= np ? j += 1 : j -= 1)) {
       m.add_point([20 * i, 20 * j, 0.0]);
     }
   }
@@ -19,8 +18,8 @@ test_disp_img = function() {
   tl.indices.resize([3, 2 * (np - 1) * (np - 1)]);
   m.add_element(tl);
   ci = 0;
-  for (i = 0, _ref = np - 1; 0 <= _ref ? i < _ref : i > _ref; 0 <= _ref ? i++ : i--) {
-    for (j = 0, _ref2 = np - 1; 0 <= _ref2 ? j < _ref2 : j > _ref2; 0 <= _ref2 ? j++ : j--) {
+  for (i = 0, _ref = np - 1; (0 <= _ref ? i < _ref : i > _ref); (0 <= _ref ? i += 1 : i -= 1)) {
+    for (j = 0, _ref2 = np - 1; (0 <= _ref2 ? j < _ref2 : j > _ref2); (0 <= _ref2 ? j += 1 : j -= 1)) {
       tl.indices.set_val([0, ci], (i + 0) * np + (j + 0));
       tl.indices.set_val([1, ci], (i + 1) * np + (j + 0));
       tl.indices.set_val([2, ci], (i + 0) * np + (j + 1));
@@ -40,7 +39,6 @@ test_disp_img = function() {
     return c.draw();
   });
 };
-
 test_CanvasManager = function() {
   var bg, browser_state, c, c2, ci, d, e, fs, i, img, j, m, n, nn, np, op, s, tl, _ref, _ref2, _ref3;
   d = new_dom_element({
@@ -70,8 +68,8 @@ test_CanvasManager = function() {
   m.add_element(new Element_Arc([1, 2, 3]));
   m.add_element(new Element_Line([3, 0]));
   op = m.nb_points();
-  for (i = 0; 0 <= np ? i < np : i > np; 0 <= np ? i++ : i--) {
-    for (j = 0; 0 <= np ? j < np : j > np; 0 <= np ? j++ : j--) {
+  for (i = 0; (0 <= np ? i < np : i > np); (0 <= np ? i += 1 : i -= 1)) {
+    for (j = 0; (0 <= np ? j < np : j > np); (0 <= np ? j += 1 : j -= 1)) {
       m.add_point([i, j, 0.3 * np * Math.sin(i / 3) * Math.sin(j / 3)]);
     }
   }
@@ -79,8 +77,8 @@ test_CanvasManager = function() {
   tl.indices.resize([3, 2 * (np - 1) * (np - 1)]);
   m.add_element(tl);
   ci = 0;
-  for (i = 0, _ref = np - 1; 0 <= _ref ? i < _ref : i > _ref; 0 <= _ref ? i++ : i--) {
-    for (j = 0, _ref2 = np - 1; 0 <= _ref2 ? j < _ref2 : j > _ref2; 0 <= _ref2 ? j++ : j--) {
+  for (i = 0, _ref = np - 1; (0 <= _ref ? i < _ref : i > _ref); (0 <= _ref ? i += 1 : i -= 1)) {
+    for (j = 0, _ref2 = np - 1; (0 <= _ref2 ? j < _ref2 : j > _ref2); (0 <= _ref2 ? j += 1 : j -= 1)) {
       tl.indices.set_val([0, ci], op + (i + 0) * np + (j + 0));
       tl.indices.set_val([1, ci], op + (i + 1) * np + (j + 0));
       tl.indices.set_val([2, ci], op + (i + 0) * np + (j + 1));
@@ -93,7 +91,7 @@ test_CanvasManager = function() {
   }
   m.visualization.display_style.set("Surface with Edges");
   n = new NodalField(m);
-  for (i = 0, _ref3 = m.nb_points(); 0 <= _ref3 ? i < _ref3 : i > _ref3; 0 <= _ref3 ? i++ : i--) {
+  for (i = 0, _ref3 = m.nb_points(); (0 <= _ref3 ? i < _ref3 : i > _ref3); (0 <= _ref3 ? i += 1 : i -= 1)) {
     n._data.set_val(i, Math.sin(i));
   }
   nn = new NamedParametrizedDrawable("tst", n);

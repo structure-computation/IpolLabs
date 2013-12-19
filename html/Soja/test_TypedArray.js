@@ -1,5 +1,4 @@
 var test_TypedArray;
-
 test_TypedArray = function() {
   var a;
   a = new TypedArray_Float64([3, 2]);

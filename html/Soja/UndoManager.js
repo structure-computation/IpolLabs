@@ -72,7 +72,7 @@ UndoManager = (function() {
     this.snapshot(true);
     num = Math.min(num, this.patch_undo.length - 1);
     if (num > 0) {
-      for (n = 0; 0 <= num ? n < num : n > num; 0 <= num ? n++ : n--) {
+      for (n = 0; (0 <= num ? n < num : n > num); (0 <= num ? n += 1 : n -= 1)) {
         this.patch_redo.push(this.patch_undo.pop());
       }
       return this._set_state_undo_list();
@@ -89,7 +89,7 @@ UndoManager = (function() {
     }
     num = Math.min(num, this.patch_redo.length);
     if (num > 0) {
-      for (n = 0; 0 <= num ? n < num : n > num; 0 <= num ? n++ : n--) {
+      for (n = 0; (0 <= num ? n < num : n > num); (0 <= num ? n += 1 : n -= 1)) {
         this.patch_undo.push(this.patch_redo.pop());
       }
       return this._set_state_undo_list();
