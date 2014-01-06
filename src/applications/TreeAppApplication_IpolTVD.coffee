@@ -5,6 +5,7 @@ class TreeAppApplication_IpolTVD extends TreeAppApplication
         @name = 'Total Variation Deconvolution'
         @powered_with = 'Ipol'
         @publication_link = 'http://www.ipol.im/pub/art/2012/g-tvdc/'
+        @tutorial_link = 'http://youtu.be/TZTwBjEpfcY'
 
         _ina = ( app ) =>
             app.data.focus.get() != app.selected_canvas_inst()?[ 0 ]?.cm.view_id
