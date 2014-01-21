@@ -2136,7 +2136,7 @@ Legend = (function() {
       return info.ctx.fillRect(pos_x, pos_y, width, height);
     } else {
       gl = info.ctx;
-      vs = "                precision mediump float;                varying float y;                uniform float my;                attribute vec3 pos;                void main( void ) {                    y = 0.5 * ( my * pos.y + 1.0 );                    gl_Position = vec4( pos, 1.0 );                }            ";
+      vs = "                precision mediump float;\n                varying float y;\n                uniform float my;\n                attribute vec3 pos;\n                void main( void ) {\n                    y = 0.5 * ( my * pos.y + 1.0 );\n                    gl_Position = vec4( pos, 1.0 );\n                }\n            ";
       fs = this.color_map.get_fragment_shader("y");
       ps = info.cm.gl_prog(vs, fs);
       ps.myUniform = gl.getUniformLocation(ps, "my");
@@ -2355,8 +2355,8 @@ Img = (function() {
     w = rgba.width;
     h = rgba.height;
     if (info.ctx_type === "gl") {
-      vs = "                attribute vec3 pos;                attribute vec2 textureCoords;                varying vec2 texcoords;                " + (info.cam.gl_attr(info, "cam")) + "                void main( void ) {                    texcoords = textureCoords;                    gl_Position = vec4( pos, 1.0 );                    " + (info.cam.gl_main(info, "cam")) + "                    gl_Position.z += 1e-5;                }            ";
-      fs = "                precision mediump float;                varying vec2 texcoords;                uniform sampler2D uSampler;                void main( void ) {                    gl_FragColor = texture2D( uSampler, texcoords );                }            ";
+      vs = "                attribute vec3 pos;\n                attribute vec2 textureCoords;\n                varying vec2 texcoords;\n                " + (info.cam.gl_attr(info, "cam")) + "\n                void main( void ) {\n                    texcoords = textureCoords;\n                    gl_Position = vec4( pos, 1.0 );\n                    " + (info.cam.gl_main(info, "cam")) + "\n                    gl_Position.z += 1e-5;\n                }\n            ";
+      fs = "                precision mediump float;\n                varying vec2 texcoords;\n                uniform sampler2D uSampler;\n                void main( void ) {\n                    gl_FragColor = texture2D( uSampler, texcoords );\n                }\n            ";
       gl = info.ctx;
       ps = info.cm.gl_prog(vs, fs);
       gl.useProgram(ps);
@@ -2975,7 +2975,7 @@ Background = (function() {
       info.ctx.fillStyle = lineargradient;
       return info.ctx.fillRect(0, 0, info.w, info.h);
     } else {
-      vs = "                precision mediump float;                varying float y;                attribute vec3 pos;                void main( void ) {                    y = 0.5 * ( pos.y + 1.0 );                    gl_Position = vec4( pos, 1.0 );                }            ";
+      vs = "                precision mediump float;\n                varying float y;\n                attribute vec3 pos;\n                void main( void ) {\n                    y = 0.5 * ( pos.y + 1.0 );\n                    gl_Position = vec4( pos, 1.0 );\n                }\n            ";
       fs = this.gradient.get_fragment_shader("y");
       ps = info.cm.gl_prog(vs, fs);
       gl = info.ctx;
@@ -3121,8 +3121,8 @@ Element_TriangleList = (function() {
     this._update_bufs(info, mesh, points);
     gl = info.ctx;
     if ((_ref = mesh.visualization.display_style.get()) === "Points" || _ref === "Wireframe" || _ref === "Surface" || _ref === "Surface with Edges") {
-      vs = "                precision mediump float;                attribute vec3 pos;                attribute vec3 nor;                varying vec3 norin;                " + (info.cam.gl_attr_vec(info, "can")) + "                " + (info.cam.gl_attr(info, "cam")) + "                void main( void ) {                    gl_Position = vec4( pos, 1.0 );                    " + (info.cam.gl_main_vec(info, "can", "nor", "norin")) + "                    " + (info.cam.gl_main(info, "cam")) + "                }            ";
-      fs = "                precision mediump float;                uniform vec4 col;                varying vec3 norin;                void main( void ) {                    float g = abs( norin[ 2 ] );                    gl_FragColor = vec4( g * col[ 0 ], g * col[ 1 ], g * col[ 2 ], col[ 3 ] );                }            ";
+      vs = "                precision mediump float;\n                attribute vec3 pos;\n                attribute vec3 nor;\n                varying vec3 norin;\n                " + (info.cam.gl_attr_vec(info, "can")) + "\n                " + (info.cam.gl_attr(info, "cam")) + "\n                void main( void ) {\n                    gl_Position = vec4( pos, 1.0 );\n                    " + (info.cam.gl_main_vec(info, "can", "nor", "norin")) + "\n                    " + (info.cam.gl_main(info, "cam")) + "\n                }\n            ";
+      fs = "                precision mediump float;\n                uniform vec4 col;\n                varying vec3 norin;\n                void main( void ) {\n                    float g = abs( norin[ 2 ] );\n                    gl_FragColor = vec4( g * col[ 0 ], g * col[ 1 ], g * col[ 2 ], col[ 3 ] );\n                }\n            ";
       ps = info.cm.gl_prog(vs, fs);
       gl.useProgram(ps);
       pos = gl.getAttribLocation(ps, "pos");
@@ -3318,8 +3318,8 @@ Element_TriangleList = (function() {
   };
   Element_TriangleList.prototype._draw_lines = function(info) {
     var col, fs, gl, pos, ps, vs;
-    vs = "            precision mediump float;            attribute vec3 pos;            " + (info.cam.gl_attr(info, "cam")) + "            void main( void ) {                gl_Position = vec4( pos, 1.0 );                " + (info.cam.gl_main(info, "cam")) + "                gl_Position -= 1e-5;            }        ";
-    fs = "            precision mediump float;            uniform vec4 col;            void main( void ) {                gl_FragColor = col;            }        ";
+    vs = "            precision mediump float;\n            attribute vec3 pos;\n            " + (info.cam.gl_attr(info, "cam")) + "\n            void main( void ) {\n                gl_Position = vec4( pos, 1.0 );\n                " + (info.cam.gl_main(info, "cam")) + "\n                gl_Position -= 1e-5;\n            }\n        ";
+    fs = "            precision mediump float;\n            uniform vec4 col;\n            void main( void ) {\n                gl_FragColor = col;\n            }\n        ";
     ps = info.cm.gl_prog(vs, fs);
     gl = info.ctx;
     gl.useProgram(ps);
@@ -3335,8 +3335,8 @@ Element_TriangleList = (function() {
   };
   Element_TriangleList.prototype._draw_points = function(info) {
     var col, fs, gl, pos, ps, vs;
-    vs = "            precision mediump float;            attribute vec3 pos;            " + (info.cam.gl_attr(info, "cam")) + "            void main( void ) {                gl_Position = vec4( pos, 1.0 );                " + (info.cam.gl_main(info, "cam")) + "                gl_Position -= 1e-5;            }        ";
-    fs = "            precision mediump float;            uniform vec4 col;            void main( void ) {                gl_FragColor = col;            }        ";
+    vs = "            precision mediump float;\n            attribute vec3 pos;\n            " + (info.cam.gl_attr(info, "cam")) + "\n            void main( void ) {\n                gl_Position = vec4( pos, 1.0 );\n                " + (info.cam.gl_main(info, "cam")) + "\n                gl_Position -= 1e-5;\n            }\n        ";
+    fs = "            precision mediump float;\n            uniform vec4 col;\n            void main( void ) {\n                gl_FragColor = col;\n            }\n        ";
     ps = info.cm.gl_prog(vs, fs);
     gl = info.ctx;
     gl.useProgram(ps);
@@ -4100,6 +4100,7 @@ ImageField = (function() {
     return this.name.get();
   };
   ImageField.prototype.draw = function(info) {
+    console.log("yop");
     if (this.rgba.height) {
       return Img._draw_persp_rec(info, this.rgba, 0, 0, [0, this.rgba.height, 0], [1, 0, 0], [0, -1, 0], [0, 0, 1], this._date_tex, this.tex, this.src);
     }

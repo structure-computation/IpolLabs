@@ -77,8 +77,8 @@ LineTheme = (function() {
       info.ctx.lineWidth = this.width.get();
       return info.ctx.strokeStyle = this.color.to_rgba();
     } else {
-      vs = "                attribute vec3 a_position;                uniform vec4 u_color;                uniform float w;                uniform float h;                void main( void ) {                    gl_Position = vec4(                         2.0 * a_position[ 0 ] / w - 1.0,                        1.0 - 2.0 * a_position[ 1 ] / h,                        a_position[ 2 ] - 1e-5,                        1.0 );                }            ";
-      fs = "                precision mediump float;                uniform vec4 u_color;                void main( void ) {                    gl_FragColor = u_color;                }            ";
+      vs = "                precision mediump float;\n                attribute vec3 a_position;\n                uniform vec4 u_color;\n                uniform float w;\n                uniform float h;\n                void main( void ) {\n                    gl_Position = vec4( \n                        2.0 * a_position[ 0 ] / w - 1.0,\n                        1.0 - 2.0 * a_position[ 1 ] / h,\n                        a_position[ 2 ] - 1e-5,\n                        1.0 );\n                }\n            ";
+      fs = "                precision mediump float;\n                uniform vec4 u_color;\n                void main( void ) {\n                    gl_FragColor = u_color;\n                }\n            ";
       gl = info.ctx;
       this.ps = info.cm.gl_prog(vs, fs);
       gl.useProgram(this.ps);
@@ -371,8 +371,8 @@ SurfaceTheme = (function() {
     if (col == null) {
       col = [0.9, 0.9, 0.9];
     }
-    vs = "            precision mediump float;            attribute vec3 pos;            void main( void ) {                gl_Position = vec4( pos, 1.0 );            }        ";
-    fs = "            precision mediump float;'           uniform vec4 col;            void main( void ) {                gl_FragColor = col;            }        ";
+    vs = "            precision mediump float;\n            attribute vec3 pos;\n            void main( void ) {\n                gl_Position = vec4( pos, 1.0 );\n            }\n        ";
+    fs = "            precision mediump float;\n'           uniform vec4 col;\n            void main( void ) {\n                gl_FragColor = col;\n            }        ";
     ps = info.cm.gl_prog(vs, fs);
     gl = info.ctx;
     points = gl.createBuffer();
