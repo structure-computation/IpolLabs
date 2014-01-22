@@ -4,16 +4,10 @@ clear_page = ->
     while MAIN_DIV.firstChild?
         MAIN_DIV.removeChild MAIN_DIV.firstChild
 
+APPS = new Lst
+
 #inclusion dans une nouvelle session        
-include_session = (td) ->    
-    td.applications.push new TreeAppApplication_Annotation
-    td.applications.push new TreeAppApplication_IpolACE
-    #td.applications.push new TreeAppApplication_IpolFSTV
-    td.applications.push new TreeAppApplication_IpolLSD
-    td.applications.push new TreeAppApplication_IpolSCA
-    #td.applications.push new TreeAppApplication_IpolStackMCM
-    td.applications.push new TreeAppApplication_IpolTVD
-    
+include_session = (td) ->        
     td.modules.push new TreeAppModule_UndoManager
     td.modules.push new TreeAppModule_PanelManager
     td.modules.push new TreeAppModule_File
@@ -35,7 +29,15 @@ new_session = ->
 #main program
 launch_ipollabs = ( main = document.body ) ->
     MAIN_DIV = main
-
+    
+    #ajout des applications de IpolLabs
+    APPS.push new TreeAppApplication_Annotation
+    APPS.push new TreeAppApplication_IpolACE
+    APPS.push new TreeAppApplication_IpolLSD
+    APPS.push new TreeAppApplication_IpolSCA
+    APPS.push new TreeAppApplication_IpolTVD
+    
+    
     bs = new BrowserState
     fs = new FileSystem
     # FileSystem._disp = true

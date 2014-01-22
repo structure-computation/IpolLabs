@@ -1719,9 +1719,9 @@ TreeAppModule_Apps = (function() {
           className: "apps_container",
           id: "id_apps_container"
         });
-        for (i_app = 0, _ref = app.data.applications.length; (0 <= _ref ? i_app <= _ref : i_app >= _ref); (0 <= _ref ? i_app += 1 : i_app -= 1)) {
-          if (app.data.applications[i_app] != null) {
-            this.display_app(app, app.data.applications[i_app]);
+        for (i_app = 0, _ref = APPS.length; (0 <= _ref ? i_app <= _ref : i_app >= _ref); (0 <= _ref ? i_app += 1 : i_app -= 1)) {
+          if (APPS[i_app] != null) {
+            this.display_app(app, APPS[i_app]);
           }
         }
         inst = void 0;
